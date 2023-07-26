@@ -1,0 +1,114 @@
+.title-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-select-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.fleche-gauche, .fleche-droite {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin: 20px 5px 20px;
+  padding: 3px; /* Ajoute de l'espace entre les flèches et la bordure */
+  border: 2px solid #000;
+
+}
+
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 2%;
+
+}
+
+
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.input-page {
+  width: 40px;
+  text-align: center;
+  margin: 3px;
+
+}
+
+/* Désactiver les petites flèches d'incrémentation sur le côté */
+.input-page::-webkit-inner-spin-button,
+.input-page::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fleches:hover {
+  opacity: 0.7;
+  background: rgba(128, 128, 128, 0.5)
+}
+
+.table-container {
+  min-height: 450px;
+}
+
+.div-select-table select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    color: #444;
+    box-sizing: border-box;
+    -webkit-appearance: none; /* Pour supprimer le style par défaut dans Chrome et Safari */
+    -moz-appearance: none; /* Pour supprimer le style par défaut dans Firefox */
+    appearance: none; /* Pour supprimer le style par défaut dans les autres navigateurs */
+}
+
+.select-table {
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.column-content {
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+}
+
+.titleColumn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.triangle-bas, .triangle-haut {
+    width: 10px;
+    height: 10px;
+    padding: 5px;
+
+}
+
+th {
+  cursor: pointer;
+}
+
+.case-table {
+    cursor: pointer;
+}
+
+.case-table:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+

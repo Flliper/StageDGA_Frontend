@@ -1,0 +1,24 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.main-content {
+    padding-top: 70px; /* Ajustez cette valeur en fonction de la hauteur de votre barre de navigation */
+}
+

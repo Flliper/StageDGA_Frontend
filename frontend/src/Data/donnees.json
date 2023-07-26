@@ -1,0 +1,66 @@
+{
+    "chinook" : {
+        "Albums" : {
+            "Onglet1" : [
+                "Title", "AlbumId"
+            ],
+            "Onglet2" : [
+                "ArtistId"
+            ]
+        }
+    },
+    "northwind": {
+        "Customers": {
+            "Onglet1": ["CustomerID", "CompanyName", "ContactName"],
+            "Onglet2": ["ContactTitle", "Address", "City", "Region"],
+            "Onglet3": ["PostalCode", "Country", "Phone", "Fax"]
+        },
+        "Orders": {
+            "Onglet1": ["OrderID", "CustomerID", "EmployeeID"],
+            "Onglet2": ["OrderDate", "RequiredDate", "ShippedDate"],
+            "Onglet3": ["ShipVia", "Freight", "ShipName"],
+            "Onglet4": ["ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry"]
+        },
+        "Employees": {
+            "Onglet1": ["EmployeeID", "LastName", "FirstName", "Title"],
+            "Onglet2": ["TitleOfCourtesy", "BirthDate", "HireDate"],
+            "Onglet3": ["Address", "City", "Region", "PostalCode", "Country"],
+            "Onglet4": ["HomePhone", "Extension", "Photo", "Notes"],
+            "Onglet5": ["ReportsTo", "PhotoPath"]
+        },
+        "Products": {
+            "Onglet1": ["ProductID", "ProductName", "SupplierID"],
+            "Onglet2": ["CategoryID", "QuantityPerUnit", "UnitPrice"],
+            "Onglet3": ["UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued"]
+        },
+        "Suppliers": {
+            "Onglet1": ["SupplierID", "CompanyName", "ContactName", "ContactTitle"],
+            "Onglet2": ["Address", "City", "Region", "PostalCode", "Country"],
+            "Onglet3": ["Phone", "Fax", "HomePage"]
+        },
+        "Order Details": {
+            "Onglet1": ["OrderID", "ProductID", "UnitPrice"],
+            "Onglet2": ["Quantity", "Discount"]
+        },
+        "Shippers": {
+            "Onglet1": ["ShipperID", "CompanyName"],
+            "Onglet2": ["Phone"]
+        },
+        "Categories": {
+            "Onglet1": ["CategoryID", "CategoryName"],
+            "Onglet2": ["Description", "Picture"]
+        },
+        "Region": {
+            "Onglet1": ["RegionID", "RegionDescription"]
+        },
+        "Territories": {
+            "Onglet1": ["TerritoryID", "TerritoryDescription"],
+            "Onglet2": ["RegionID"]
+        },
+        "EmployeeTerritories": {
+            "Onglet1": ["EmployeeID", "TerritoryID"]
+        }
+
+    }
+}
+

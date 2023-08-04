@@ -6,8 +6,8 @@
 
 .div-select-table {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin: 10px;
 }
 
@@ -22,7 +22,7 @@
 }
 
 
-.navigation {
+.div-navigation {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +74,7 @@
     appearance: none; /* Pour supprimer le style par défaut dans les autres navigateurs */
 }
 
-.select-table {
+.select-select-table {
     margin-bottom: 20px;
     align-items: center;
     justify-content: center;
@@ -103,12 +103,53 @@ th {
   cursor: pointer;
 }
 
+.table-container {
+  white-space: nowrap;
+  border-collapse: collapse;
+  width: 100%;
+  overflow-x: auto;
+}
+
 .case-table {
     cursor: pointer;
 }
 
 .case-table:hover {
-    background-color: lightblue;
-    cursor: pointer;
+  background-color: lightblue;
+  cursor: pointer;
 }
+
+.edit-mode:hover {
+  background-color: transparent;
+}
+
+.edit-mode td:hover {
+  background-color: lightblue;
+}
+
+
+
+.table-edit {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    color: #444;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 20px;
+    position: absolute;
+    right: 5%;
+    top: 80px;
+
+}
+
+.table-edit:hover {
+    background-color: #ddd;
+}
+
 

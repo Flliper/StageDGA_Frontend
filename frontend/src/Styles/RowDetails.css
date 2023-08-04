@@ -1,82 +1,82 @@
-.row-details-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    max-width: 800px;
-    margin: auto;
-}
+/*.row-details-container {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    padding: 20px;*/
+/*    background-color: #e9ecef;*/
+/*    border-radius: 5px;*/
+/*    max-width: 800px;*/
+/*    margin: auto;*/
+/*}*/
 
-.row-details-container h1 {
-    font-size: 2em;
-    color: #343a40;
-    margin-bottom: 10px;
-}
+/*.row-details-container h1 {*/
+/*    font-size: 2em;*/
+/*    color: #343a40;*/
+/*    margin-bottom: 10px;*/
+/*}*/
 
-.row-details-container h2 {
-    font-size: 1.5em;
-    color: #343a40;
-    margin-bottom: 20px;
-}
+/*.row-details-container h2 {*/
+/*    font-size: 1.5em;*/
+/*    color: #343a40;*/
+/*    margin-bottom: 20px;*/
+/*}*/
 
-.row-details-container ul {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    list-style-type: none;
-    padding: 0;
-}
-
-
-.row-details-container ul li {
-    font-size: 1.2em;
-    color: #343a40;
-    margin-bottom: 5px;
-    padding: 5px;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    background-color: #f8f9fa;
-}
+/*.row-details-container ul {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(2, 1fr);*/
+/*    gap: 20px;*/
+/*    list-style-type: none;*/
+/*    padding: 0;*/
+/*}*/
 
 
-.titre {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.row-details-container h1,
-.row-details-container h2 {
-    text-align: center;
-}
-
-
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
-
-.loading {
-    font-size: 5em; /* Ajustez la taille comme vous le souhaitez */
-    color: #343a40; /* La couleur du texte */
-    position: absolute; /* La positionne absolument dans son conteneur parent */
-    top: 50%; /* La positionne au centre verticalement */
-    left: 50%; /* La positionne au centre horizontalement */
-    transform: translate(-50%, -50%); /* Ajuste la position pour qu'elle soit parfaitement centrée */
-    animation: blink 1s linear infinite; /* Applique l'animation */
-}
+/*.row-details-container ul li {*/
+/*    font-size: 1.2em;*/
+/*    color: #343a40;*/
+/*    margin-bottom: 5px;*/
+/*    padding: 5px;*/
+/*    border: 1px solid #dee2e6;*/
+/*    border-radius: 5px;*/
+/*    background-color: #f8f9fa;*/
+/*}*/
 
 
-.clickable-li {
-    padding: 10px; /* Espace autour du texte pour le rendre plus facile à cliquer */
-    transition: background-color 0.3s; /* Animation douce lors du changement de couleur d'arrière-plan */
-}
+/*.titre {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*}*/
 
-.clickable-li:hover {
-    cursor: pointer; /* Change le curseur en main lorsque l'élément est survolé */
-    color: #007bff; /* La couleur du texte change au survol */
-    box-shadow: 0 0 10px #007bff; /* Ajoute une ombre de boîte lorsqu'il est survolé */
-}
+/*.row-details-container h1,*/
+/*.row-details-container h2 {*/
+/*    text-align: center;*/
+/*}*/
+
+
+/*@keyframes blink {*/
+/*    0% { opacity: 1; }*/
+/*    50% { opacity: 0.5; }*/
+/*    100% { opacity: 1; }*/
+/*}*/
+
+/*.loading {*/
+/*    font-size: 5em; !* Ajustez la taille comme vous le souhaitez *!*/
+/*    color: #343a40; !* La couleur du texte *!*/
+/*    position: absolute; !* La positionne absolument dans son conteneur parent *!*/
+/*    top: 50%; !* La positionne au centre verticalement *!*/
+/*    left: 50%; !* La positionne au centre horizontalement *!*/
+/*    transform: translate(-50%, -50%); !* Ajuste la position pour qu'elle soit parfaitement centrée *!*/
+/*    animation: blink 1s linear infinite; !* Applique l'animation *!*/
+/*}*/
+
+
+/*.clickable-li {*/
+/*    padding: 10px; !* Espace autour du texte pour le rendre plus facile à cliquer *!*/
+/*    transition: background-color 0.3s; !* Animation douce lors du changement de couleur d'arrière-plan *!*/
+/*}*/
+
+/*.clickable-li:hover {*/
+/*    cursor: pointer; !* Change le curseur en main lorsque l'élément est survolé *!*/
+/*    color: #007bff; !* La couleur du texte change au survol *!*/
+/*    box-shadow: 0 0 10px #007bff; !* Ajoute une ombre de boîte lorsqu'il est survolé *!*/
+/*}*/

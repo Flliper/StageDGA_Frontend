@@ -1,66 +1,198 @@
 {
-    "chinook" : {
-        "Albums" : {
-            "Onglet1" : [
-                "Title", "AlbumId"
-            ],
-            "Onglet2" : [
-                "ArtistId"
-            ]
-        }
+  "chinook": {
+    "albums": {
+      "Information": ["AlbumId", "Title"],
+      "Artist": ["ArtistId"]
     },
-    "northwind": {
-        "Customers": {
-            "Onglet1": ["CustomerID", "CompanyName", "ContactName"],
-            "Onglet2": ["ContactTitle", "Address", "City", "Region"],
-            "Onglet3": ["PostalCode", "Country", "Phone", "Fax"]
-        },
-        "Orders": {
-            "Onglet1": ["OrderID", "CustomerID", "EmployeeID"],
-            "Onglet2": ["OrderDate", "RequiredDate", "ShippedDate"],
-            "Onglet3": ["ShipVia", "Freight", "ShipName"],
-            "Onglet4": ["ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry"]
-        },
-        "Employees": {
-            "Onglet1": ["EmployeeID", "LastName", "FirstName", "Title"],
-            "Onglet2": ["TitleOfCourtesy", "BirthDate", "HireDate"],
-            "Onglet3": ["Address", "City", "Region", "PostalCode", "Country"],
-            "Onglet4": ["HomePhone", "Extension", "Photo", "Notes"],
-            "Onglet5": ["ReportsTo", "PhotoPath"]
-        },
-        "Products": {
-            "Onglet1": ["ProductID", "ProductName", "SupplierID"],
-            "Onglet2": ["CategoryID", "QuantityPerUnit", "UnitPrice"],
-            "Onglet3": ["UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued"]
-        },
-        "Suppliers": {
-            "Onglet1": ["SupplierID", "CompanyName", "ContactName", "ContactTitle"],
-            "Onglet2": ["Address", "City", "Region", "PostalCode", "Country"],
-            "Onglet3": ["Phone", "Fax", "HomePage"]
-        },
-        "Order Details": {
-            "Onglet1": ["OrderID", "ProductID", "UnitPrice"],
-            "Onglet2": ["Quantity", "Discount"]
-        },
-        "Shippers": {
-            "Onglet1": ["ShipperID", "CompanyName"],
-            "Onglet2": ["Phone"]
-        },
-        "Categories": {
-            "Onglet1": ["CategoryID", "CategoryName"],
-            "Onglet2": ["Description", "Picture"]
-        },
-        "Region": {
-            "Onglet1": ["RegionID", "RegionDescription"]
-        },
-        "Territories": {
-            "Onglet1": ["TerritoryID", "TerritoryDescription"],
-            "Onglet2": ["RegionID"]
-        },
-        "EmployeeTerritories": {
-            "Onglet1": ["EmployeeID", "TerritoryID"]
-        }
-
+    "sqlite_sequence": {
+      "Sequence": ["name", "seq"]
+    },
+    "artists": {
+      "Information": ["ArtistId", "Name"]
+    },
+    "customers": {
+      "Identification": ["CustomerId", "FirstName", "LastName"],
+      "CompanyAndLocation": ["Company", "Address", "City"],
+      "LocationDetails": ["State", "Country", "PostalCode"],
+      "Communication": ["Phone", "Fax", "Email"],
+      "Support": ["SupportRepId"]
+    },
+    "employees": {
+      "Identification": ["EmployeeId", "LastName", "FirstName"],
+      "RoleAndReporting": ["Title", "ReportsTo", "BirthDate", "HireDate"],
+      "Location": ["Address", "City", "State"],
+      "ContactDetails": ["Country", "PostalCode", "Phone", "Fax", "Email"]
+    },
+    "genres": {
+      "Information": ["GenreId", "Name"]
+    },
+    "invoices": {
+      "InvoiceDetails": ["InvoiceId", "CustomerId", "InvoiceDate"],
+      "BillingAddress": ["BillingAddress", "BillingCity", "BillingState"],
+      "BillingDetails": ["BillingCountry", "BillingPostalCode", "Total"]
+    },
+    "invoice_items": {
+      "ItemDetails": ["InvoiceLineId", "InvoiceId", "TrackId"],
+      "Pricing": ["UnitPrice", "Quantity"]
+    },
+    "media_types": {
+      "Information": ["MediaTypeId", "Name"]
+    },
+    "playlists": {
+      "Information": ["PlaylistId", "Name"]
+    },
+    "playlist_track": {
+      "TrackDetails": ["PlaylistId", "TrackId"]
+    },
+    "tracks": {
+      "TrackInformation": ["TrackId", "Name", "AlbumId"],
+      "MediaTypeAndGenre": ["MediaTypeId", "GenreId", "Composer"],
+      "TechnicalDetails": ["Milliseconds", "Bytes", "UnitPrice"]
+    },
+    "sqlite_stat1": {
+      "StatDetails": ["tbl", "idx", "stat"]
     }
+  },
+  "northwind": {
+    "Customers": {
+      "Identification": ["CustomerID", "CompanyName", "ContactName"],
+      "ContactDetails": ["ContactTitle", "Address", "City", "Region"],
+      "Communication": ["PostalCode", "Country", "Phone", "Fax"]
+    },
+    "Orders": {
+      "OrderInformation": ["OrderID", "CustomerID", "EmployeeID"],
+      "Dates": ["OrderDate", "RequiredDate", "ShippedDate"],
+      "ShippingDetails": ["ShipVia", "Freight", "ShipName"],
+      "ShippingAddress": ["ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry"]
+    },
+    "Employees": {
+      "Identification": ["EmployeeID", "LastName", "FirstName", "Title"],
+      "RoleAndDates": ["TitleOfCourtesy", "BirthDate", "HireDate"],
+      "Location": ["Address", "City", "Region", "PostalCode", "Country"],
+      "CommunicationAndNotes": ["HomePhone", "Extension", "Photo", "Notes"],
+      "Reporting": ["ReportsTo", "PhotoPath"]
+    },
+    "Products": {
+      "Identification": ["ProductID", "ProductName", "SupplierID"],
+      "ProductDetails": ["CategoryID", "QuantityPerUnit", "UnitPrice"],
+      "Inventory": ["UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued"]
+    },
+    "Suppliers": {
+      "Identification": ["SupplierID", "CompanyName", "ContactName", "ContactTitle"],
+      "Location": ["Address", "City", "Region", "PostalCode", "Country"],
+      "Communication": ["Phone", "Fax", "HomePage"]
+    },
+    "Order Details": {
+      "OrderAndProduct": ["OrderID", "ProductID", "UnitPrice"],
+      "QuantityAndDiscount": ["Quantity", "Discount"]
+    },
+    "Shippers": {
+      "Identification": ["ShipperID", "CompanyName"],
+      "Communication": ["Phone"]
+    },
+    "Categories": {
+      "Identification": ["CategoryID", "CategoryName"],
+      "DescriptionAndImage": ["Description", "Picture"]
+    },
+    "Regions": {
+      "Details": ["RegionID", "RegionDescription"]
+    },
+    "Territories": {
+      "Identification": ["TerritoryID", "TerritoryDescription"],
+      "Region": ["RegionID"]
+    },
+    "EmployeeTerritories": {
+      "Mapping": ["EmployeeID", "TerritoryID"]
+    }
+  },
+  "northwindAccess": {
+    "Customers": {
+      "Identification": ["ID", "Company"],
+      "Name": ["Last Name", "First Name"],
+      "ContactDetails": ["E-mail Address", "Job Title", "Business Phone", "Home Phone", "Mobile Phone", "Fax Number"],
+      "Location": ["Address", "City", "State/Province", "ZIP/Postal Code", "Country/Region"],
+      "Web": ["Web Page"],
+      "NotesAndAttachments": ["Notes", "Attachments"]
+    },
+    "Employee Privileges": {
+      "Mapping": ["Employee ID", "Privilege ID"]
+    },
+    "Employees": {
+      "Identification": ["ID", "Company"],
+      "Name": ["Last Name", "First Name"],
+      "ContactDetails": ["E-mail Address", "Job Title", "Business Phone", "Home Phone", "Mobile Phone", "Fax Number"],
+      "Location": ["Address", "City", "State/Province", "ZIP/Postal Code", "Country/Region"],
+      "Web": ["Web Page"],
+      "NotesAndAttachments": ["Notes", "Attachments"]
+    },
+    "Inventory Transaction Types": {
+      "Details": ["ID", "Type Name"]
+    },
+    "Inventory Transactions": {
+      "TransactionDetails": ["Transaction ID", "Transaction Type", "Transaction Created Date", "Transaction Modified Date", "Product ID", "Quantity", "Purchase Order ID", "Customer Order ID", "Comments"]
+    },
+    "Invoices": {
+      "InvoiceDetails": ["Invoice ID", "Order ID", "Invoice Date", "Due Date", "Tax", "Shipping", "Amount Due"]
+    },
+    "Order Details": {
+      "OrderAndProduct": ["ID", "Order ID", "Product ID", "Quantity", "Unit Price"],
+      "OtherDetails": ["Discount", "Status ID", "Date Allocated", "Purchase Order ID", "Inventory ID"]
+    },
+    "Order Details Status": {
+      "Status": ["Status ID", "Status Name"]
+    },
+    "Orders": {
+      "OrderDetails": ["Order ID", "Employee ID", "Customer ID", "Order Date", "Shipped Date", "Shipper ID", "Ship Name"],
+      "ShippingDetails": ["Ship Address", "Ship City", "Ship State/Province", "Ship ZIP/Postal Code", "Ship Country/Region", "Shipping Fee", "Taxes"],
+      "PaymentDetails": ["Payment Type", "Paid Date", "Notes", "Tax Rate", "Tax Status", "Status ID"]
+    },
+    "Orders Status": {
+      "Status": ["Status ID", "Status Name"]
+    },
+    "Orders Tax Status": {
+      "TaxStatus": ["ID", "Tax Status Name"]
+    },
+    "Privileges": {
+      "Details": ["Privilege ID", "Privilege Name"]
+    },
+    "Products": {
+      "Identification": ["Supplier IDs", "ID", "Product Code", "Product Name"],
+      "ProductDetails": ["Description", "Standard Cost", "List Price", "Reorder Level", "Target Level", "Quantity Per Unit", "Discontinued", "Minimum Reorder Quantity", "Category"],
+      "Attachments": ["Attachments"]
+    },
+    "Purchase Order Details": {
+      "OrderAndProduct": ["ID", "Purchase Order ID", "Product ID", "Quantity", "Unit Cost"],
+      "OtherDetails": ["Date Received", "Posted To Inventory", "Inventory ID"]
+    },
+    "Purchase Order Status": {
+      "Status": ["Status ID", "Status"]
+    },
+    "Purchase Orders": {
+      "OrderDetails": ["Purchase Order ID", "Supplier ID", "Created By", "Submitted Date", "Creation Date", "Status ID", "Expected Date", "Shipping Fee", "Taxes"],
+      "PaymentDetails": ["Payment Date", "Payment Amount", "Payment Method"],
+      "NotesAndApproval": ["Notes", "Approved By", "Approved Date", "Submitted By"]
+    },
+    "Sales Reports": {
+      "Details": ["Group By", "Display", "Title", "Filter Row Source", "Default"]
+    },
+    "Shippers": {
+      "Identification": ["ID", "Company"],
+      "Name": ["Last Name", "First Name"],
+      "ContactDetails": ["E-mail Address", "Job Title", "Business Phone", "Home Phone", "Mobile Phone", "Fax Number"],
+      "Location": ["Address", "City", "State/Province", "ZIP/Postal Code", "Country/Region"],
+      "Web": ["Web Page"],
+      "NotesAndAttachments": ["Notes", "Attachments"]
+    },
+    "Strings": {
+      "Details": ["String ID", "String Data"]
+    },
+    "Suppliers": {
+      "Identification": ["ID", "Company"],
+      "Name": ["Last Name", "First Name"],
+      "ContactDetails": ["E-mail Address", "Job Title", "Business Phone", "Home Phone", "Mobile Phone", "Fax Number"],
+      "Location": ["Address", "City", "State/Province", "ZIP/Postal Code", "Country/Region"],
+      "Web": ["Web Page"],
+      "NotesAndAttachments": ["Notes", "Attachments"]
+    }
+  }
 }
-

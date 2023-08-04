@@ -2,13 +2,21 @@ import Accueil from "./Components/Accueil"
 import {BrowserRouter as Router, Route, Link, Routes, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
-import './Styles/App.css';
+// import './Styles/App.css';
 import BDD from "./Components/BDD";
 import Tests from "./Components/Tests";
 import Navbar from "./Components/Navbar";
 import RowDetails from "./Components/RowDetails";
 import ForeignKeys from "./Components/ForeignKeys";
 import Onglet from "./Components/Onglet";
+import Connexion from "./Components/Connexion";
+import LoginForm from "./Components/Connexion";
+import {AuthProvider} from "./Components/AuthContext";
+import Test from "./Components/Tests";
+import UnifiedComponent from "./Components/UnifiedComponent";
+import ModificationBDD from "./Components/ModificationBDD";
+import PrivateRoute from "./Components/PrivateRoute";
+import EditCell from "./Components/EditCase";
 
 
 
@@ -37,38 +45,39 @@ function App() {
 
 
   return (
-  <div className="App">
-    <Navbar />
-       <div className="main-content">
-        <Routes>
-          <Route path="/" element={<Accueil setSelectedTable={setSelectedTable}/>}/>
-          <Route path="/test" element={<><Tests /><Tests /></>} />
-          <Route path="/:bdd/row/:table/:column/:id" element={<Onglet tableColumns={tableColumns} setTableColumns={setTableColumns} />}  />
-          <Route path="/:bdd" element={
-            <BDD selectedTable={selectedTable} setSelectedTable={setSelectedTable}
-                 tableNames={tableNames} tableColumns={tableColumns} infoTable={infoTable}
-                 page={page} setPage={setPage} count={count} filters={filters} setFilters={setFilters}
-                 sort={sort} setSort={setSort} setPrimaryKey={setPrimaryKey}
-                 nbLines={nbLines} setTableNames={setTableNames}
-                 setInfoTable={setInfoTable} setTableColumns={setTableColumns} setCount={setCount}
-                 setAllForeignKeys={setAllForeignKeys} setAllTableColumns={setAllTableColumns}
-                 setAllPrimaryKeys={setAllPrimaryKeys} allTableColumns={allTableColumns} primaryKey={primaryKey}
+      <AuthProvider>
+        <div className="App">
+          <Navbar />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Accueil setSelectedTable={setSelectedTable} setTableNames={setTableNames}
+              setSort={setSort} setFilters={setFilters}/>}/>
+              <Route path="/connexion" element={<Connexion />}/>
+              <Route path="/connexion/test" element={<Test />}/>
+              <Route path="/modification" element={<ModificationBDD />}/>
+              <Route path="/:bdd/edit/:table/:primaryColumn/:primaryValue/:column/:value" element={<EditCell/>}/>
+              {/*<Route path="/:bdd/row/:table/:column/:id" element={<UnifiedComponent tableColumns={tableColumns} setTableColumns={setTableColumns}*/}
+              {/*       allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} allForeignKeys={allForeignKeys} />}  />*/}
+              <Route path="/:bdd/row/:table/:column/:id" element={<Onglet tableColumns={tableColumns} setTableColumns={setTableColumns} />}  />
+              <Route path="/:bdd" element={
+                <BDD selectedTable={selectedTable} setSelectedTable={setSelectedTable}
+                     tableNames={tableNames} tableColumns={tableColumns} infoTable={infoTable}
+                     page={page} setPage={setPage} count={count} filters={filters} setFilters={setFilters}
+                     sort={sort} setSort={setSort} setPrimaryKey={setPrimaryKey}
+                     nbLines={nbLines} setTableNames={setTableNames}
+                     setInfoTable={setInfoTable} setTableColumns={setTableColumns} setCount={setCount}
+                     setAllForeignKeys={setAllForeignKeys} setAllTableColumns={setAllTableColumns}
+                     setAllPrimaryKeys={setAllPrimaryKeys} allTableColumns={allTableColumns} primaryKey={primaryKey}
+                />
+              }/>
+              <Route path="/:bdd/occurrences/:table/:columnName/:columnValue" element={<ForeignKeys allForeignKeys={allForeignKeys}
+              allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} primaryKey={primaryKey} />} />
+            </Routes>
+          </div>
+        </div>
+      </AuthProvider>
+    );
 
-            />
-          }/>
-          <Route path="/:bdd/row/:table/:column/:id" element={<RowDetails tableColumns={tableColumns} setTableColumns={setTableColumns} />} />
-          <Route path="/:bdd/occurrences/:table/:columnName/:columnValue" element={<ForeignKeys allForeignKeys={allForeignKeys}
-          allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} primaryKey={primaryKey} />} />
-
-
-
-
-
-
-        </Routes>
-       </div>
-  </div>
-);
 
 }
 

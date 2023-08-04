@@ -5,7 +5,6 @@ import '../Styles/ForeignKeys.css';
 
 function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys, primaryKey}) {
 
-    console.log(allPrimaryKeys)
 
     const navigate = useNavigate();
 
@@ -18,7 +17,7 @@ function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys, primaryKe
        if (Object.keys(allForeignKeys).length > 0) {
 
            const newForeignTables = {};
-
+           // Parcourir les clés étrangères
            for (let [key, value] of Object.entries(allForeignKeys)) {
                for (let innerArray of value) {
                    if (innerArray[1] === table && innerArray[2] === columnName) {
@@ -36,6 +35,7 @@ function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys, primaryKe
            // On ajoute la table initiale dans tous les cas
            newForeignTables[table] = columnName;
            setForeignTables(newForeignTables)
+           console.log(newForeignTables)
 
        }
     }, [table]);
@@ -45,7 +45,7 @@ function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys, primaryKe
       (async () => {
         try {
           const promises = Object.entries(foreignTables).map(([foreignTable, foreignColonne]) =>
-            axios.get(`http://localhost:8000/api/${bdd}/${foreignTable}/column/${foreignColonne}/${columnValue}`)
+            axios.get(`http://localhost:8000/api/${bdd}/${foreignTable}/colonne/${foreignColonne}/${columnValue}`)
           );
 
           const responses = await Promise.all(promises);
@@ -69,7 +69,6 @@ function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys, primaryKe
     return (
       <div>
         {Object.entries(foreignData).map(([tableName, tableData]) => {
-          console.log(allPrimaryKeys[tableName])
           // Ne rend rien si la tableData est vide
           if (tableData.length === 0) {
             return null;

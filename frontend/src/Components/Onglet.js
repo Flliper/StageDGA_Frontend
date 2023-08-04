@@ -17,11 +17,13 @@ function Onglet({tableColumns, setTableColumns}) {
       if (tableColumns && tableColumns.length) {
         axios.get(`http://localhost:8000/api/${bdd}/${table}/ligne/${id}`)
           .then(response => {
+            console.log(response.data)
             const dataWithColumnNames = {};
             response.data.forEach((value, index) => {
               dataWithColumnNames[tableColumns[index]] = value;
             });
             setRowData(dataWithColumnNames);
+
           })
           .catch(error => {
             console.error('Error fetching row data', error);
@@ -39,9 +41,12 @@ function Onglet({tableColumns, setTableColumns}) {
             });
     }, [table]);
 
+
     if (!rowData || !tabColumns) {
         return <div className="loading">Loading...</div>;
     }
+
+
 
     const columnsForTable = tabColumns[bdd][table];
     const tabs = Object.keys(columnsForTable);
@@ -50,7 +55,7 @@ function Onglet({tableColumns, setTableColumns}) {
         <div className="tab-container">
             <div className="titre">
                 <h1>Table : {table}</h1>
-                <h2>Clé primaire : {tableColumns[0]} = {id}</h2>
+                <h2>Identifiant : {tableColumns[0]} = {id}</h2>
             </div>
             <Tabs>
                 <TabList>

@@ -119,5 +119,4 @@ a:hover {
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Ajoute une ombre de focus bleue */
 }
 
-
-
+/* il faut enlever le display block à table pour rendre plus joli avec cette interface */

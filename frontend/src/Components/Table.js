@@ -13,7 +13,7 @@ import {useEffect, useState} from "react";
 
 function Table({selectedTable, allTableColumns }) {
 
-    const { bdd, columnName, columnValue } = useParams();
+    const { bdd, table, columnName, columnValue } = useParams();
     console.log(columnName, columnValue)
 
     const [page, setPage] = useState(1);
@@ -32,9 +32,9 @@ function Table({selectedTable, allTableColumns }) {
 
     // Récupère les données de la table sélectionnée
     useEffect(() => {
-        if (selectedTable) {
+        if (table) {
             const filterString = encodeURIComponent(JSON.stringify(filters));
-            let url = `http://localhost:8000/api/${bdd}/${selectedTable}?page=${page}&limit=${limit}&filter=${filterString}`;
+            let url = `http://localhost:8000/api/${bdd}/${table}?page=${page}&limit=${limit}&filter=${filterString}`;
 
             if (sort.column !== null) {
                 const sortString = encodeURIComponent(JSON.stringify({[sort.column]: sort.order}));
@@ -158,7 +158,7 @@ function Table({selectedTable, allTableColumns }) {
     return (
         <div>
             <div className="header">
-                {selectedTable && totalPages !== 1 ?
+                {table && totalPages !== 1 ?
                   <div className="navigation">
                     <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheFinGauche} alt="flecheFinGauche" onClick={() => putDataAtBegin()} />
                     <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheGauche} alt="flecheGauche" onClick={() => previousPage()} />
@@ -172,7 +172,7 @@ function Table({selectedTable, allTableColumns }) {
                 <table>
                   <thead>
                     <tr>
-                      {(allTableColumns[selectedTable] || []).map((columnName, index) => (
+                      {(allTableColumns[table] || []).map((columnName, index) => (
                         <th key={index} onClick={() => handleSort(columnName)}>
                           <div className="column-content">
                             <div className="titleColumn">
@@ -200,7 +200,7 @@ function Table({selectedTable, allTableColumns }) {
                     {dataTable.map((row, index) => (
                       <tr key={index} className="case-table">
                         {Object.entries(row).map(([columnName, cell], cellIndex) => (
-                          <td key={cellIndex} onClick={() => navigate(`/${bdd}/row/${selectedTable}/${cell}`)}>{cell}</td>
+                          <td key={cellIndex} onClick={() => navigate(`/${bdd}/row/${table}/${cell}`)}>{cell}</td>
                         ))}
                       </tr>
                     ))}

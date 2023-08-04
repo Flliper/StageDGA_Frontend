@@ -7,8 +7,9 @@ import triangleBas from '../Assets/triangle_bas.svg';
 import triangleHaut from '../Assets/triangle_haut.svg';
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import {useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import Table from "./Table";
+import {AuthContext} from "./AuthContext";
 
 
 
@@ -20,8 +21,8 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
 
 
     const { bdd } = useParams();
-
-
+    const { isLoggedIn } = useContext(AuthContext);
+    const [editMode, setEditMode] = useState(false);
 
     //Récupère les noms des tables
     useEffect(() => {
@@ -201,16 +202,16 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
                 break;
         }
     }
-
+    setPage(1);
     setSort(newSort);
 }
 
 
     return (
         <div>
-            <div className="header">
+            <div className="selected-header">
                 {selectedTable && totalPages !== 1 ?
-                  <div className="navigation">
+                  <div className="div-navigation">
                     <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheFinGauche} alt="flecheFinGauche" onClick={() => putDataAtBegin()} />
                     <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheGauche} alt="flecheGauche" onClick={() => previousPage()} />
                     <input className="input-page" type="number" value={page} min={1} onChange={handleInputChange} />
@@ -219,20 +220,27 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
                   </div>
                 : null}
                 <div className="div-select-table">
-                <select className="select-table" value={selectedTable} onChange={e =>  { setPage(1); setFilters({}) ; setSelectedTable(e.target.value)}}>
+                <select className="select-select-table" value={selectedTable} onChange={e =>  { setPage(1); setFilters({}) ; setSelectedTable(e.target.value)}}>
                     <option value="">Sélectionner une table</option>
                     {tableNames.map(name => (
                       <option key={name} value={name}>{name}</option>
                     ))}
                 </select>
+                { isLoggedIn &&
+                    <button className="table-edit" onClick={() => setEditMode(!editMode)}>
+                        { editMode ? "Enlever le mode éditeur" : "Modifier une case" }
+                    </button>
+                }
                 </div>
             </div>
+
+
             <div className="table-container">
             <table>
                 <thead>
                     <tr>
                       {tableColumns.map((columnName, index) => (
-                        <th key={index} onClick={() => handleSort(columnName)}>
+                        <th key={index} onClick={() => {handleSort(columnName); setPage(1)}}>
                           <div className="column-content">
                               <div className="titleColumn">
                                 {columnName}
@@ -256,13 +264,21 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
                     </tr>
                 </thead>
                 <tbody>
-                    {infoTable.map((row, index) => (
-                        <tr className="case-table" key={index} onClick={() => { navigate(`/${bdd}/row/${selectedTable}/${primaryKey.primaryKey}/${row[0]}`)}}>
-                          {row.map((cell, cellIndex) => (
-                            <td key={cellIndex}>{cell}</td>
-                          ))}
-                        </tr>
+                  {infoTable.map((row, index) => (
+                    <tr className={`case-table ${editMode ? "edit-mode" : ""}`} key={index} onClick={() => { if(!editMode) {
+                      navigate(`/${bdd}/row/${selectedTable}/${primaryKey.primaryKey}/${row[0]}`)
+                    }}}>
+                      {row.map((cell, cellIndex) => (
+                        <td onClick={(e) => {
+                          if(editMode) {
+                            e.stopPropagation(); // to prevent the tr click event to trigger
+                            navigate(`/${bdd}/edit/${selectedTable}/${primaryKey.primaryKey}/${row[0]}/${tableColumns[cellIndex]}/${cell}`)
+                          }}}>
+                          {cell}
+                        </td>
                       ))}
+                    </tr>
+                  ))}
                 </tbody>
 
             </table>

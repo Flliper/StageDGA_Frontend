@@ -1,0 +1,149 @@
+.tab-container-onglet {
+    width: 30%;
+    min-width: 30%;
+    padding: 20px;
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+    background-color: #fff;
+    border-radius: 8px;
+    margin-left: 0;
+    margin-right: 20px;
+
+}
+
+.titre-onglet {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.titre-onglet h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.titre-onglet h2 {
+    font-size: 1.5em;
+    color: #777;
+}
+
+/* Styles des onglets */
+
+.react-tabs__tab-list {
+    border-bottom: 1px solid #aaa;
+    margin: 0;
+    padding: 0;
+}
+
+.react-tabs__tab {
+    display: inline-block;
+    list-style: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #777;
+    transition: color 0.3s ease;
+}
+
+.react-tabs__tab--selected {
+    color: #333;
+    border-bottom: 2px solid #333;
+}
+
+/* Styles du contenu de l'onglet */
+
+.react-tabs__tab-panel {
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.react-tabs__tab-panel--hidden {
+    display: none;
+}
+
+/* Style du lien */
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading {
+    font-size: 5em; /* Ajustez la taille comme vous le souhaitez */
+    color: #343a40; /* La couleur du texte */
+    position: absolute; /* La positionne absolument dans son conteneur parent */
+    top: 50%; /* La positionne au centre verticalement */
+    left: 50%; /* La positionne au centre horizontalement */
+    transform: translate(-50%, -50%); /* Ajuste la position pour qu'elle soit parfaitement centrée */
+    animation: blink 1s linear infinite; /* Applique l'animation */
+}
+
+.react-tabs__tab:focus:after {
+    display:none;
+}
+
+.clickable-element-onglet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px; /* Augmentez le padding pour donner plus d'espace */
+    margin-bottom: 10px; /* Ajoutez une marge pour espacer les éléments entre eux */
+    background-color: #f8f9fa; /* Un fond clair pour faire ressortir l'élément */
+    border: 1px solid #dee2e6; /* Une bordure subtile pour délimiter l'élément */
+    border-radius: 5px; /* Les coins arrondis donnent un aspect plus doux et moderne */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Une légère ombre pour donner une impression de relief */
+    transition: all 0.2s ease-in-out; /* Animer tous les changements pour une transition plus douce */
+}
+
+.clickable-element-onglet:hover {
+    cursor: pointer; /* Change le curseur en main lorsque l'élément est survolé */
+    color: #007bff; /* La couleur du texte change au survol */
+    box-shadow: 0 0 10px #007bff; /* Ajoute une ombre de boîte lorsqu'il est survolé */
+    transform: scale(1.02); /* Fait légèrement grossir l'élément lorsqu'il est survolé */
+}
+
+/* Vous pouvez également ajouter des styles pour le focus afin d'améliorer l'accessibilité */
+
+.clickable-element-onglet:focus {
+    outline: none; /* Supprime l'outline par défaut qui peut être inesthétique */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Ajoute une ombre de focus bleue */
+}
+
+/*!* Ajoutés *!*/
+
+.global {
+    display: flex;
+}
+
+.block-table {
+    margin-bottom: 50px;
+}
+
+/*.div-foreignKeys {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*table {*/
+/*    overflow-x: auto;*/
+/*    white-space: nowrap;*/
+/*    display: block;*/
+/*}*/
+
+.div-foreign-keys {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: block;
+}

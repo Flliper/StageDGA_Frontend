@@ -1,0 +1,57 @@
+.global-test {
+    display: flex;
+}
+
+.tab-container-test {
+  width: 30%;
+  min-width: 30%;
+  padding: 20px;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  background-color: #fff;
+  border-radius: 8px;
+  margin-left: 0;
+  margin-right: 20px;
+}
+
+/*table {*/
+/*  border-collapse: collapse;*/
+/*  width: 100%;*/
+/*}*/
+
+
+/*th, td {*/
+/*  border: 1px solid #ddd;*/
+/*  padding: 8px;*/
+/*  text-align: left;*/
+
+/*}*/
+
+/*th {*/
+/*  padding-top: 12px;*/
+/*  padding-bottom: 12px;*/
+/*  text-align: left;*/
+/*  background-color: #4CAF50;*/
+/*  color: white;*/
+/*}*/
+
+/*.main-content {*/
+/*    padding-top: 70px; !* Ajustez cette valeur en fonction de la hauteur de la barre de navigation *!*/
+/*}*/
+
+.global-test-table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.test-block-table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  white-space: nowrap;
+  border-collapse: collapse;
+  width: 100%;
+}

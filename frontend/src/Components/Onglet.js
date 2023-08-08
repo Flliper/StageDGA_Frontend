@@ -17,7 +17,6 @@ function Onglet({tableColumns, setTableColumns}) {
       if (tableColumns && tableColumns.length) {
         axios.get(`http://localhost:8000/api/${bdd}/${table}/ligne/${id}`)
           .then(response => {
-            console.log(response.data)
             const dataWithColumnNames = {};
             response.data.forEach((value, index) => {
               dataWithColumnNames[tableColumns[index]] = value;
@@ -47,9 +46,9 @@ function Onglet({tableColumns, setTableColumns}) {
     }
 
 
-
     const columnsForTable = tabColumns[bdd][table];
     const tabs = Object.keys(columnsForTable);
+
 
     return (
         <div className="tab-container">

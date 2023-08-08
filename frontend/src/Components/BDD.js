@@ -227,8 +227,10 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
                     ))}
                 </select>
                 { isLoggedIn &&
-                    <button className="table-edit" onClick={() => setEditMode(!editMode)}>
-                        { editMode ? "Enlever le mode éditeur" : "Modifier une case" }
+                    <button
+                        className={`table-edit ${editMode ? "editor-active" : ""}`}
+                        onClick={() => setEditMode(!editMode)} >
+                        { editMode ? "Enlever le mode éditeur" : "Mode éditeur" }
                     </button>
                 }
                 </div>
@@ -264,23 +266,25 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
                     </tr>
                 </thead>
                 <tbody>
-                  {infoTable.map((row, index) => (
-                    <tr className={`case-table ${editMode ? "edit-mode" : ""}`} key={index} onClick={() => { if(!editMode) {
-                      navigate(`/${bdd}/row/${selectedTable}/${primaryKey.primaryKey}/${row[0]}`)
-                    }}}>
-                      {row.map((cell, cellIndex) => (
-                        <td onClick={(e) => {
-                          if(editMode) {
-                            e.stopPropagation(); // to prevent the tr click event to trigger
-                            navigate(`/${bdd}/edit/${selectedTable}/${primaryKey.primaryKey}/${row[0]}/${tableColumns[cellIndex]}/${cell}`)
-                          }}}>
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
+                    {infoTable.map((row, index) => (
+                        <tr className={`case-table ${editMode ? "editor" : ""}`} key={index} onClick={() => {
+                            if(!editMode) {
+                                navigate(`/${bdd}/row/${selectedTable}/${primaryKey.primaryKey}/${row[0]}`)
+                            }
+                        }}>
+                            {row.map((cell, cellIndex) => (
+                                <td onClick={(e) => {
+                                    if(editMode) {
+                                        e.stopPropagation();
+                                        navigate(`/${bdd}/edit/${selectedTable}/${primaryKey.primaryKey}/${row[0]}/${tableColumns[cellIndex]}/${cell}`)
+                                    }
+                                }}>
+                                    {cell}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
                 </tbody>
-
             </table>
             </div>
 

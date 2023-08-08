@@ -114,19 +114,20 @@ th {
     cursor: pointer;
 }
 
+/* Lorsqu'une ligne est survolée en mode non éditeur */
 .case-table:hover {
-  background-color: lightblue;
-  cursor: pointer;
+    background-color: lightblue;
 }
 
-.edit-mode:hover {
-  background-color: transparent;
+/* Lorsqu'une cellule est survolée en mode éditeur */
+.case-table.editor td:hover {
+    background-color: lightblue;
 }
 
-.edit-mode td:hover {
-  background-color: lightblue;
+/* Pour s'assurer que la ligne n'est pas mise en surbrillance lorsqu'elle est survolée en mode éditeur */
+.case-table.editor:hover {
+    background-color: transparent;
 }
-
 
 
 .table-edit {
@@ -140,16 +141,24 @@ th {
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
-    display: inline-block;
-    margin-bottom: 20px;
     position: absolute;
     right: 5%;
     top: 80px;
-
 }
 
 .table-edit:hover {
     background-color: #ddd;
 }
 
+/* Mode éditeur */
+.table-edit.editor-active {
+    background-color: #007BFF;  /* couleur de fond bleue */
+    color: #ffffff;            /* texte blanc */
+    border: 1px solid #0056b3; /* bordure bleue foncée pour un peu de contraste */
+    box-shadow: 0 4px 8px rgba(0,123,255,0.25); /* ajoute une petite ombre pour plus de profondeur */
+}
 
+/* Effet de survol en mode éditeur */
+.table-edit.editor-active:hover {
+    background-color: #0056b3; /* une teinte bleue plus foncée pour le survol */
+}

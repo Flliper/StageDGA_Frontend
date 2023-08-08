@@ -3,7 +3,7 @@ import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import '../Styles/ForeignKeys.css';
 
-function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys, primaryKey}) {
+function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys}) {
 
 
     const navigate = useNavigate();

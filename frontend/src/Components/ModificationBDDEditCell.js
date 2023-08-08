@@ -11,7 +11,9 @@ function ModificationBDDEditCell()
 
     const [newValue, setNewValue] = useState('');
     const [message, setMessage] = useState('');
+    const [viewValue, setViewValue] = useState(value);
     const [fadeOut, setFadeOut] = useState(false);
+
 
   // useEffect(() => {
   //   if (!isLoggedIn) {
@@ -33,6 +35,8 @@ function ModificationBDDEditCell()
         })
         .then(response => {
             if (response.data.status === "success") {
+            setViewValue(newValue)
+            setNewValue('')
             setMessage("Opération réussie");
             setTimeout(() => setMessage(''), 3000);
             // setFadeOut(false);
@@ -61,7 +65,7 @@ function ModificationBDDEditCell()
             <div className="cell-details">
                 <p><strong>Table :</strong> {table}</p>
                 <p><strong>Colonne :</strong> {column}</p>
-                <p><strong>Valeur actuelle :</strong> {value}</p>
+                <p><strong>Valeur actuelle :</strong> {viewValue}</p>
             </div>
             <div className="edit-input">
                 <input type="text" placeholder="Nouvelle valeur" value={newValue} onChange={e => setNewValue(e.target.value)} />

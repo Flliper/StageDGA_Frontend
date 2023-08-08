@@ -62,9 +62,9 @@ function App() {
               <Route path="/modification/manageRow" element={<ModificationBDDAddRow />}/>
               <Route path="/modification" element={<ModificationBDD />}/>
               <Route path="/:bdd/edit/:table/:primaryColumn/:primaryValue/:column/:value" element={<ModificationBDDEditCell/>}/>
-              {/*<Route path="/:bdd/row/:table/:column/:id" element={<UnifiedComponent tableColumns={tableColumns} setTableColumns={setTableColumns}*/}
-              {/*       allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} allForeignKeys={allForeignKeys} />}  />*/}
-              <Route path="/:bdd/row/:table/:column/:id" element={<Onglet tableColumns={tableColumns} setTableColumns={setTableColumns} />}  />
+              <Route path="/:bdd/row/:table/:column/:id" element={<UnifiedComponent tableColumns={tableColumns} setTableColumns={setTableColumns}
+                     allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} allForeignKeys={allForeignKeys} />}  />
+              {/*<Route path="/:bdd/row/:table/:column/:id" element={<Onglet tableColumns={tableColumns} setTableColumns={setTableColumns} />}  />*/}
               <Route path="/:bdd" element={
                 <BDD selectedTable={selectedTable} setSelectedTable={setSelectedTable}
                      tableNames={tableNames} tableColumns={tableColumns} infoTable={infoTable}
@@ -77,7 +77,7 @@ function App() {
                 />
               }/>
               <Route path="/:bdd/occurrences/:table/:columnName/:columnValue" element={<ForeignKeys allForeignKeys={allForeignKeys}
-              allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} primaryKey={primaryKey} />} />
+              allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} />} />
             </Routes>
           </div>
         </div>

@@ -1,0 +1,117 @@
+.container-formulaire-column {
+  width: 30%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #F5F5F5;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+}
+
+.container-formulaire-column h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.container-formulaire-column button {
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 4px;
+  background-color: #888;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.container-formulaire-column button.active {
+  background-color: #007bff;
+}
+
+.container-formulaire-column .db-button {
+  margin: 10px;
+}
+
+.container-formulaire-column input,
+.container-formulaire-column select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+}
+
+.container-formulaire-column select {
+    background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right .75rem center;
+}
+
+.container-formulaire-column input::placeholder {
+  color: #888;
+}
+
+.db-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.block-formulaire-column {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.05);
+}
+
+.select-colonne-formulaire {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    color: #444;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select-colonne-formulaire {
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-submit:hover {
+    background: #0056b3;
+    color: white;
+    transform: scale(1.1);
+}
+
+.message {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+.message.success {
+  color: #4CAF50; /* green */
+  border: 1px solid #4CAF50;
+  background-color: #D4EDDA;
+}
+
+.message.error {
+  color: #F44336; /* red */
+  border: 1px solid #F44336;
+  background-color: #F8D7DA;
+}

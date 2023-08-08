@@ -16,7 +16,10 @@ import Test from "./Components/Tests";
 import UnifiedComponent from "./Components/UnifiedComponent";
 import ModificationBDD from "./Components/ModificationBDD";
 import PrivateRoute from "./Components/PrivateRoute";
-import EditCell from "./Components/EditCase";
+import ModificationBDDEditCell from "./Components/ModificationBDDEditCell";
+import ModificationBDDAddTable from "./Components/ModificationBDDAddTable";
+import ModificationBDDAddColumn from "./Components/ModificationBDDAddColumn";
+import ModificationBDDAddRow from "./Components/ModificationBDDAddRow";
 
 
 
@@ -54,8 +57,11 @@ function App() {
               setSort={setSort} setFilters={setFilters}/>}/>
               <Route path="/connexion" element={<Connexion />}/>
               <Route path="/connexion/test" element={<Test />}/>
+              <Route path="/modification/manageTable" element={<ModificationBDDAddTable />}/>
+              <Route path="/modification/manageColumn" element={<ModificationBDDAddColumn />}/>
+              <Route path="/modification/manageRow" element={<ModificationBDDAddRow />}/>
               <Route path="/modification" element={<ModificationBDD />}/>
-              <Route path="/:bdd/edit/:table/:primaryColumn/:primaryValue/:column/:value" element={<EditCell/>}/>
+              <Route path="/:bdd/edit/:table/:primaryColumn/:primaryValue/:column/:value" element={<ModificationBDDEditCell/>}/>
               {/*<Route path="/:bdd/row/:table/:column/:id" element={<UnifiedComponent tableColumns={tableColumns} setTableColumns={setTableColumns}*/}
               {/*       allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} allForeignKeys={allForeignKeys} />}  />*/}
               <Route path="/:bdd/row/:table/:column/:id" element={<Onglet tableColumns={tableColumns} setTableColumns={setTableColumns} />}  />

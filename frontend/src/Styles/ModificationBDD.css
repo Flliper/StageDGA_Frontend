@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.container h1 {
+    color: #333;
+}
+
+.redirection-button{
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    width: 200px;
+    text-align: center;
+}
+
+.redirection-button:hover, .redirection-button:hover a {
+    background: #0056b3;
+    color: white;
+    transform: scale(1.1);
+}
+

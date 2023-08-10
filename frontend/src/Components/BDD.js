@@ -273,7 +273,7 @@ function BDD({tableNames, selectedTable, setSelectedTable, tableColumns,
                             }
                         }}>
                             {row.map((cell, cellIndex) => (
-                                <td onClick={(e) => {
+                                <td key={cellIndex} onClick={(e) => {
                                     if(editMode) {
                                         e.stopPropagation();
                                         navigate(`/${bdd}/edit/${selectedTable}/${primaryKey.primaryKey}/${row[0]}/${tableColumns[cellIndex]}/${cell}`)

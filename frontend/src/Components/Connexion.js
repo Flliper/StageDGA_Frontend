@@ -9,6 +9,7 @@ function Connexion() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
+  const [inputInvalid, setInputInvalid] = useState(false);
   const { isLoggedIn, logIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -27,12 +28,16 @@ function Connexion() {
     });
 
     if (response.data.status === "success") {
-        // L'authentification a réussi, vous pouvez rediriger l'utilisateur ici.
-        logIn({username, token: response.data.token}); // Update your login function to take a token
-        setMessage("Vous êtes connecté. Voici votre token : " + response.data.token);
+        logIn({username, token: response.data.token});
+        setMessage("Opération réussie");
+        setTimeout(() => setMessage(''), 3000);
     } else {
-      // L'authentification a échoué, vous pouvez afficher un message d'erreur ici.
-        setMessage("Erreur d'authentification");
+         setMessage("Erreur d'authentification");
+         setInputInvalid(true);
+         setTimeout(() => {
+             setMessage('');
+             setInputInvalid(false);
+        }, 3000);
     }
   };
 
@@ -40,10 +45,26 @@ function Connexion() {
     <div className="login-container">
       <h2 className="login-title">Connectez-vous</h2>
       <form className="login-form" onSubmit={handleSubmit}>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Nom d'utilisateur" className="login-input" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mot de passe" className="login-input" />
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Nom d'utilisateur"
+        className={`login-input ${inputInvalid ? 'invalid-border' : ''}`}
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Mot de passe"
+        className={`login-input ${inputInvalid ? 'invalid-border' : ''}`}
+      />
+
         <button type="submit" className="login-button">Se connecter</button>
-        <div className="login-message">{message}</div>
+        { message &&
+            <div className={`message ${message === 'Opération réussie' ? 'success' : 'error'}`}>
+              {message}
+            </div> }
       </form>
       {/*<Link to="/connexion/test">*/}
       {/*   <button> test connexion </button>*/}

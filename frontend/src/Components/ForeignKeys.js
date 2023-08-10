@@ -35,7 +35,7 @@ function ForeignKeys({allForeignKeys, allTableColumns, allPrimaryKeys}) {
            // On ajoute la table initiale dans tous les cas
            newForeignTables[table] = columnName;
            setForeignTables(newForeignTables)
-           console.log(newForeignTables)
+           // console.log(newForeignTables)
 
        }
     }, [table]);

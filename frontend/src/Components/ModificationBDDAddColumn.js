@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import '../Styles/ModificationBDDAddColumn.css';
+import {AuthContext} from "./AuthContext";
+import {useNavigate} from "react-router-dom";
 
 function ModificationBDDAddColumn() {
     const [selectedDB, setSelectedDB] = useState(null);
@@ -10,8 +12,20 @@ function ModificationBDDAddColumn() {
     const [columns, setColumns] = useState([]);
     const [columnName, setColumnName] = useState('');
     const [selectedColumn, setSelectedColumn] = useState(null);
+    const [newColumnName, setNewColumnName] = useState('');
     const [dbs, setDbs] = useState([]);
+    const [isValidIDForRename, setIsValidIDForRename] = useState(false);
+    const [isValidIDForCreate, setIsValidIDForCreate] = useState(false);
     const [message, setMessage] = useState(null);
+
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+    if (!authContext.isLoggedIn) {
+      navigate('/connexion');
+    }
+  }, [authContext.isLoggedIn, navigate]);
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/bdd")
@@ -40,13 +54,45 @@ function ModificationBDDAddColumn() {
         }
     }, [selectedTable]);
 
+    useEffect(() => {
+        if (newColumnName) {
+            setIsValidIDForRename(!columns.includes(String(newColumnName)));
+        } else {
+            setIsValidIDForRename(false);
+        }
+    }, [newColumnName]);
+
+    useEffect(() => {
+        if (columnName) {
+            setIsValidIDForCreate(!columns.includes(String(columnName)));
+        } else {
+            setIsValidIDForRename(false);
+        }
+    }, [columnName]);
+
+    useEffect(() => {
+        let timeoutId;
+        if (message !== '') {
+            timeoutId = setTimeout(() => setMessage(''), 3000);
+        }
+        // Effect cleanup: clear the timeout when the effect re-runs or the component unmounts
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [message]);
+
 
     const handleColumnOperation = () => {
     axios.post(`http://localhost:8000/api/${selectedDB}/manageColumn`, {
         operation: operation,
         selectedTable: selectedTable,
         columnName: columnName,
-        selectedColumn: selectedColumn
+        selectedColumn: selectedColumn,
+        newColumnName: newColumnName
+    },{
+        headers: {
+            'Authorization': `Token ${authContext.user.token}`
+        }
     })
     .then(response => {
         if (response.data.status === "success") {
@@ -103,12 +149,13 @@ function ModificationBDDAddColumn() {
                     <div className="db-buttons">
                         <button className={`db-button ${operation === 'add' ? 'active' : ''}`} onClick={() => setOperation(operation === 'add' ? null : 'add')}>Ajouter une colonne</button>
                         <button className={`db-button ${operation === 'delete' ? 'active' : ''}`} onClick={() => setOperation(operation === 'delete' ? null : 'delete')}>Supprimer une colonne</button>
+                        <button className={`db-button ${operation === 'rename' ? 'active' : ''}`} onClick={() => setOperation(operation === 'rename' ? null : 'rename')}>Renommer une colonne</button>
                     </div>
                 </div>
             )}
 
             {operation === 'add' && selectedTable && (
-                <input
+                <input className={isValidIDForCreate ? "valid-border" : "invalid-border"}
                     type="text"
                     placeholder="Nom de la colonne"
                     value={columnName}
@@ -123,9 +170,43 @@ function ModificationBDDAddColumn() {
                     ))}
                 </select>
             )}
-            {((operation === 'add' && columnName) || (operation === 'delete' && selectedColumn)) && (
+            {operation === 'rename' && selectedTable && (
+                <div className="div-rename-column">
+                    <select className="select-rename-colonne-formulaire" onChange={e => setSelectedColumn(e.target.value)}>
+                        <option value="">Sélectionnez une colonne à renommer</option>
+                        {columns.map(colonne => (
+                            <option key={colonne} value={colonne}>{colonne}</option>
+                        ))}
+                    </select>
+                    { selectedColumn && <input className={isValidIDForRename ? "valid-border" : "invalid-border"}
+                        type="text"
+                        placeholder="Nouveau nom de colonne"
+                        value={newColumnName}
+                        onChange={e => setNewColumnName(e.target.value)}
+                    /> }
+                </div>
+            )}
+
+            {((operation === 'add' && columnName) || (operation === 'delete' && selectedColumn)
+            || (operation === 'rename' && newColumnName )) && (
                 <button className="button-submit" onClick={() => {
-                    handleColumnOperation();
+                    if (operation === 'add' && !isValidIDForCreate) {
+                        if (columnName === '') {
+                            setMessage("Veuillez entrer un nom de colonne");
+                        }
+                        else {
+                            setMessage("Nom de colonne déjà existant");
+                        }
+                    }
+                    if (operation=== 'rename' && !isValidIDForRename) {
+                        if (newColumnName === '') {
+                            setMessage("Veuillez entrer un nom de colonne");
+                        }
+                        else {
+                            setMessage("Nom de colonne déjà existant");
+                        }
+                    }
+                    else handleColumnOperation();
                 }}>Confirmer</button>
             )}
             { message &&

@@ -1,11 +1,11 @@
 import {AuthContext} from "./AuthContext";
 import {useNavigate, useParams} from "react-router-dom";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import '../Styles/ModificationBDDEditCell.css';
 import axios from "axios";
 function ModificationBDDEditCell()
 {
-    const { isLoggedIn } = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
     const navigate = useNavigate();
     const { bdd, table, primaryColumn,  primaryValue, column, value } = useParams();
 
@@ -15,11 +15,11 @@ function ModificationBDDEditCell()
     const [fadeOut, setFadeOut] = useState(false);
 
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate('/connexion');
-  //   }
-  // }, [isLoggedIn, navigate]);
+  useEffect(() => {
+    if (!authContext.isLoggedIn) {
+      navigate('/connexion');
+    }
+  }, [authContext.isLoggedIn, navigate]);
 
 
     // Penser à regarder comment les tables ont été créé pour gérer les modifications de clé primaires
@@ -32,22 +32,17 @@ function ModificationBDDEditCell()
             primaryValue: primaryValue,
             column: column,
             newValue: newValue
-        })
+        },{
+        headers: {
+            'Authorization': `Token ${authContext.user.token}`
+        }
+    })
         .then(response => {
             if (response.data.status === "success") {
             setViewValue(newValue)
             setNewValue('')
             setMessage("Opération réussie");
             setTimeout(() => setMessage(''), 3000);
-            // setFadeOut(false);
-            //
-            // setTimeout(() => {
-            //     setFadeOut(true); // Commencez le fade-out après 2.7 secondes
-            //
-            //     setTimeout(() => {
-            //         setMessage(''); // Effacez le message après l'animation
-            //     }, 300); // Animation de 0.3 secondes
-            // }, 2700);
         } else {
             setMessage("Opération échouée");
             setTimeout(() => setMessage(''), 3000);

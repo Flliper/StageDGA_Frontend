@@ -11,10 +11,10 @@ import {useEffect, useState} from "react";
 
 
 
-function ForeignKeysBis({table, columnName, columnValue, allTableColumns, ForeignKeysTable, originalTable }) {
+function ForeignKeysBis({table, columnName, columnValue, allTableColumns, ForeignKeysTable, originalTable, allPrimaryKeys, allForeignKeys }) {
 
-    console.log(table,"columnName", columnName)
-    console.log(table,"columnValue", columnValue)
+    // console.log(table,"columnName", columnName)
+    // console.log(table,"columnValue", columnValue)
 
     const { bdd } = useParams();
 
@@ -33,22 +33,34 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
     let totalPages = count === 0 ? 1 : Math.ceil(count / 10);
 
     // Extrait le nom de la colonne adapté à partir de ForeignKeysTable
-    const foreignKeyTriplet = ForeignKeysTable.find(([foreignColumnName, tableName, originalColumnName]) =>
-            tableName === originalTable && originalColumnName === columnName );
+    // const foreignKeyTriplet = ForeignKeysTable.find(([foreignColumnName, tableName, originalColumnName]) =>
+    //         tableName === originalTable && originalColumnName === columnName );
     // const adaptedColumnName = foreignKeyTriplet ? foreignKeyTriplet[0] : undefined;
-    const adaptedColumnName = table === originalTable ? columnName :
-        foreignKeyTriplet ? foreignKeyTriplet[0] : undefined;
+    // const adaptedColumnName = table === originalTable ? columnName :
+    //     foreignKeyTriplet ? foreignKeyTriplet[0] : undefined;
 
+    const newForeignTables = {};
+    // Parcourir les clés étrangères
+    for (let [key, value] of Object.entries(allForeignKeys)) {
+        for (let innerArray of value) {
+            if (innerArray[1] === originalTable && innerArray[2] === columnName) {
+                newForeignTables[key] = innerArray[0];
+            }
+        }
+    }
+    // Parcourir les clés primaires
+    for (let [key, value] of Object.entries(allPrimaryKeys)) {
+        if (value === columnName) {
+            newForeignTables[key] = value;
+        }
+    }
+    // On ajoute la table initiale dans tous les cas
+    newForeignTables[originalTable] = columnName;
 
+    const adaptedColumnName = newForeignTables[table];
 
-
-//     for (const element of ForeignKeysTable) {
-//     console.log(table, element[0], originalTable, element[2], columnName)
-//     if (element[0] === originalTable && element[2] === columnName) {
-//         setAdaptedColumnName(element[1])
-//         console.log(table, element[1])
-//     }
-// }
+    // console.log(table, columnName, adaptedColumnName)
+    
 
 
 
@@ -68,7 +80,6 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
             if (adaptedColumnName && columnValue) {
                 url += `&columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
             }
-            // console.log(table, url)
             axios.get(url)
                 .then(response => {
                     setDataTable(response.data);
@@ -79,7 +90,7 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
         } else {
             setDataTable([]);
         }
-    }, [table, page, limit, filters, sort, columnName, columnValue, ForeignKeysTable]);
+    }, [table, page, limit, filters, sort, columnName, columnValue]);
 
 
 
@@ -97,14 +108,17 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
     }, [table]);
 
     //Récupère le nombre de lignes de la table sélectionnée
-
     useEffect(() => {
         if (table) {
-            console.log(table, "adaptedColumnName", adaptedColumnName)
+            // console.log(table, "adaptedColumnName", adaptedColumnName)
+            // console.log(table, encodeURIComponent(adaptedColumnName))
             const filterString = encodeURIComponent(JSON.stringify(filters));
-            const url = `http://localhost:8000/api/${bdd}/${table}/count?filter=${filterString}
-            &columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
-            // console.log(table, url)
+            // const url = `http://localhost:8000/api/${bdd}/${table}/count?filter=${filterString}
+            // &columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
+            let url = `http://localhost:8000/api/${bdd}/${table}/count?filter=${filterString}`;
+            if (adaptedColumnName && columnValue) {
+                url += `&columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
+            }
             axios.get(url)
                 .then(response => {
                     setCount(response.data.count);
@@ -115,8 +129,7 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
         } else {
             setCount(0);
         }
-    }, [table, filters, originalTable, columnValue]);
-
+    }, [table, filters, columnValue]);
 
 
 
@@ -228,9 +241,10 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
                   <tbody>
                     {dataTable.map((row, index) => (
                       <tr key={index} className="case-table">
-                        {Object.entries(row).map(([columnName, cell], cellIndex) => (
-                          <td key={cellIndex} onClick={() => navigate(`/${bdd}/row/${table}/${columnName}/${row[0]}`)}>{cell}</td>
+                        {row.map((cell, cellIndex) => (
+                            <td key={cellIndex} onClick={() => {navigate(`/${bdd}/row/${table}/${allPrimaryKeys[table]}/${row[0]}`)}}>{cell}</td>
                         ))}
+
                       </tr>
                     ))}
                   </tbody>

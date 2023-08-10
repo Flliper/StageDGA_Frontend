@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import '../Styles/ModificationBDDAddTable.css';
+import {AuthContext} from "./AuthContext";
+import {useNavigate} from "react-router-dom";
 
 function ModificationBDDAddTable() {
     const [selectedDB, setSelectedDB] = useState(null);
@@ -8,8 +10,20 @@ function ModificationBDDAddTable() {
     const [tableName, setTableName] = useState('');
     const [tables, setTables] = useState([]);
     const [selectedTable, setSelectedTable] = useState(null);
+    const [newTableName, setNewTableName] = useState('');
     const [dbs, setDbs] = useState([]);
+    const [isValidIDForRename, setIsValidIDForRename] = useState(false);
+    const [isValidIDForCreate, setIsValidIDForCreate] = useState(false);
     const [message, setMessage] = useState(null);
+
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+    if (!authContext.isLoggedIn) {
+      navigate('/connexion');
+    }
+  }, [authContext.isLoggedIn, navigate]);
 
     useEffect(() => {
     axios.get("http://localhost:8000/api/bdd")
@@ -29,13 +43,43 @@ function ModificationBDDAddTable() {
         }
     }, [selectedDB]);
 
+    useEffect(() => {
+        if (newTableName) {
+            setIsValidIDForRename(!tables.some(subArray => subArray[0] === String(newTableName)));
+        } else {
+            setIsValidIDForRename(false);
+        }
+    }, [newTableName]);
 
+    useEffect(() => {
+        if (tableName) {
+            setIsValidIDForCreate(!tables.some(subArray => subArray[0] === String(tableName)));
+        } else {
+            setIsValidIDForRename(false);
+        }
+    }, [tableName]);
+
+    useEffect(() => {
+        let timeoutId;
+        if (message !== '') {
+            timeoutId = setTimeout(() => setMessage(''), 3000);
+        }
+        // Effect cleanup: clear the timeout when the effect re-runs or the component unmounts
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [message]);
 
     const handleTableOperation = () => {
     axios.post(`http://localhost:8000/api/${selectedDB}/manageTable`, {
         operation: operation,
         tableName: tableName,
-        selectedTable: selectedTable
+        selectedTable: selectedTable,
+        newTableName: newTableName
+    },{
+        headers: {
+            'Authorization': `Token ${authContext.user.token}`
+        }
     })
     .then(response => {
         if (response.data.status === "success") {
@@ -44,10 +88,11 @@ function ModificationBDDAddTable() {
             setOperation(null);
             setTableName('');
             setSelectedTable(null);
-            setTimeout(() => setMessage(''), 3000);
+            setNewTableName('');
+            // setTimeout(() => setMessage(''), 3000);
         } else {
             setMessage("Opération échouée");
-            setTimeout(() => setMessage(''), 3000);
+            // setTimeout(() => setMessage(''), 3000);
         }
     })
     .catch(error => {
@@ -84,12 +129,14 @@ function ModificationBDDAddTable() {
                     <div className="db-buttons">
                         <button className={`db-button ${operation === 'add' ? 'active' : ''}`} onClick={() => setOperation(operation === 'add' ? null : 'add')}>Ajouter une table</button>
                         <button className={`db-button ${operation === 'delete' ? 'active' : ''}`} onClick={() => setOperation(operation === 'delete' ? null : 'delete')}>Supprimer une table</button>
+                        <button className={`db-button ${operation === 'rename' ? 'active' : ''}`} onClick={() => setOperation(operation === 'rename' ? null : 'rename')}>Renommer une table</button>
+
                     </div>
                 </div>
             )}
 
             {operation === 'add' && (
-                <input
+                <input className={isValidIDForCreate ? "valid-border" : "invalid-border"}
                     type="text"
                     placeholder="Nom de la table"
                     value={tableName}
@@ -98,15 +145,52 @@ function ModificationBDDAddTable() {
             )}
             {operation === 'delete' && (
                 <select className="select-table-formulaire" onChange={e => setSelectedTable(e.target.value)}>
-                    <option value="">Sélectionnez une table</option>
+                    <option value="">Sélectionnez une table à supprimer</option>
                     {tables.map(table => (
                         <option key={table} value={table}>{table}</option>
                     ))}
                 </select>
             )}
-            {((operation === 'add' && tableName) || (operation === 'delete' && selectedTable)) && (
+
+            {operation === 'rename' && (
+                <>
+                    <select className="select-rename-table-formulaire" onChange={e => {setNewTableName(''); setSelectedTable(e.target.value)}}>
+                        <option value="">Sélectionnez une table à renommer</option>
+                        {tables.map(table => (
+                            <option key={table} value={table}>{table}</option>
+                        ))}
+                    </select>
+                    {selectedTable && (
+                    <input className={isValidIDForRename ? "valid-border" : "invalid-border"}
+                        type="text"
+                        placeholder="Nouveau nom de la table"
+                        value={newTableName}
+                        onChange={e => setNewTableName(e.target.value)}
+                    /> )}
+                </>
+            )}
+
+
+            {((operation === 'add' && tableName) || (operation === 'delete' && selectedTable) ||
+                (operation === 'rename' && newTableName )) && (
                 <button className="button-submit" onClick={() => {
-                    handleTableOperation();
+                    if (operation === 'add' && !isValidIDForCreate) {
+                        if (tableName === '') {
+                            setMessage("Veuillez entrer un nom de table");
+                        }
+                        else {
+                            setMessage("Nom de table déjà existant");
+                        }
+                    }
+                    if (operation=== 'rename' && !isValidIDForRename) {
+                        if (newTableName === '') {
+                            setMessage("Veuillez entrer un nom de table");
+                        }
+                        else {
+                            setMessage("Nom de table déjà existant");
+                        }
+                    }
+                    else handleTableOperation();
                 }}>Confirmer</button>
             )}
             { message &&

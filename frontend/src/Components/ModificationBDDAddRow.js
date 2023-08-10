@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../Styles/ModificationBDDAddRow.css'
 import axios from "axios";
+import {AuthContext} from "./AuthContext";
+import {useNavigate} from "react-router-dom";
 
 function ModificationBDDAddRow() {
 
@@ -17,6 +19,14 @@ function ModificationBDDAddRow() {
     const [isValidIDForDelete, setIsValidIDForDelete] = useState(false);
     const [isValidIDForNewRow, setIsValidIDForNewRow] = useState(false);
 
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+    if (!authContext.isLoggedIn) {
+      navigate('/connexion');
+    }
+  }, [authContext.isLoggedIn, navigate]);
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/bdd")
@@ -64,9 +74,6 @@ function ModificationBDDAddRow() {
     useEffect(() => {
         if (primaryKeyToDelete) {
             setIsValidIDForDelete(dataID.includes(String(primaryKeyToDelete)));
-            console.log("isValidIDForDelete: ", dataID.includes(primaryKeyToDelete));
-            console.log("dataID: ", dataID);
-            console.log("primaryKeyToDelete: ", primaryKeyToDelete);
         }
         else {
             setIsValidIDForDelete(false);
@@ -74,13 +81,13 @@ function ModificationBDDAddRow() {
     }, [primaryKeyToDelete]);
 
     useEffect(() => {
-        if (newRowData[columns[0]]) {
-            setIsValidIDForNewRow(!dataID.includes(String(newRowData[columns[0]])));
-            console.log("isValidIDForNewRow: ", !dataID.includes(newRowData[columns[0]]));
-            console.log("dataID: ", dataID);
-            console.log("newRowData[columns[0]]: ", newRowData[columns[0]]);
-        }
-        else {
+        const currentID = newRowData[columns[0]];
+
+        if (currentID) {
+            const isIntegerID = Number.isInteger(Number(currentID));
+            const isUniqueID = !dataID.includes(String(currentID));
+            setIsValidIDForNewRow(isIntegerID && isUniqueID);
+        } else {
             setIsValidIDForNewRow(false);
         }
     }, [newRowData]);
@@ -92,6 +99,10 @@ function ModificationBDDAddRow() {
         newRowData: newRowData,
         primaryKeyToDelete: primaryKeyToDelete,
         columns : columns
+    },{
+        headers: {
+            'Authorization': `Token ${authContext.user.token}`
+        }
     })
     .then(response => {
         if (response.data.status === "success") {
@@ -100,16 +111,28 @@ function ModificationBDDAddRow() {
             setOperation(null);
             setPrimaryKeyToDelete('');
             setNewRowData({});
-            setTimeout(() => setMessage(''), 3000);
+            // setTimeout(() => setMessage(''), 3000);
         } else {
             setMessage("Opération échouée");
-            setTimeout(() => setMessage(''), 3000);
+            // setTimeout(() => setMessage(''), 3000);
         }
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
+
+    useEffect(() => {
+        let timeoutId;
+        if (message !== '') {
+            timeoutId = setTimeout(() => setMessage(''), 3000);
+        }
+        // Effect cleanup: clear the timeout when the effect re-runs or the component unmounts
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [message]);
+
 
     return (
         <div className="container-formulaire-row">
@@ -154,17 +177,23 @@ function ModificationBDDAddRow() {
                 </div>
             )}
 
-            {operation === 'add' && selectedTable && columns.map((column, index) => (
-                <div key={index} >
-                    <label>{column}</label>
-                    <input className={index === 0 ? (isValidIDForNewRow ? "valid-border" : "invalid-border") : ""}
-                        type="text"
-                        placeholder={`Valeur pour ${column}`}
-                        value={newRowData[column]}
-                        onChange={e => setNewRowData({...newRowData, [column]: e.target.value})}
-                    />
+            {operation === 'add' && selectedTable &&
+                <div className="global-div-row">
+                    {columns.map((column, index) => (
+                        <div className="div-row" key={index}>
+                            <label>{column}</label>
+                            <input
+                                className={'input-row ' + (index === 0 ? (isValidIDForNewRow ? "valid-border" : "invalid-border") : "")}
+                                type="text"
+                                placeholder={`Valeur pour ${column}`}
+                                value={newRowData[column]}
+                                onChange={e => setNewRowData({...newRowData, [column]: e.target.value})}
+                            />
+                        </div>
+                    ))}
                 </div>
-            ))}
+            }
+
 
 
             {operation === 'delete' && selectedTable && (
@@ -186,7 +215,7 @@ function ModificationBDDAddRow() {
                         if (newRowData[columns[0]] === '')
                             setMessage("Aucune clé primaire n'a été spécifiée");
                         else
-                        setMessage("La clé primaire existe déjà");
+                        setMessage("La clé primaire existe déjà ou n'est pas un entier");
                     else if (operation === 'delete' && !isValidIDForDelete)
                         setMessage("La clé primaire n'existe pas");
                     else
@@ -197,6 +226,7 @@ function ModificationBDDAddRow() {
             <div className={`message ${message === 'Opération réussie' ? 'success' : 'error'}`}>
               {message}
             </div> }
+
 
         </div>
     );

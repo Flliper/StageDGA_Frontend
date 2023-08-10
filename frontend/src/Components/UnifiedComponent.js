@@ -174,7 +174,8 @@ function UnifiedComponent({tableColumns, setTableColumns, allForeignKeys, allTab
                 return (
                   // <div key={tableName} className="block-table">
                     <ForeignKeysBis originalTable={table} table={tableName} columnName={ongletColumn} columnValue={ongletValue}
-                                    allTableColumns={allTableColumns} ForeignKeysTable={allForeignKeys[tableName]}  />
+                                    allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys}
+                                    ForeignKeysTable={allForeignKeys[tableName]} allForeignKeys={allForeignKeys}  />
                   // </div>
 
                 );

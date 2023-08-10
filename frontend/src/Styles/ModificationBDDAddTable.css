@@ -45,13 +45,13 @@
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  /*border: 1px solid #ccc;*/
   border-radius: 4px;
   appearance: none; /* Remove default styles */
   background-size: 1.5rem;
 }
 
-.container-formulaire-table select {
+.select-table-formulaire, .select-rename-table-formulaire {
     background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right .75rem center; /* Custom dropdown icon */
 }
 
@@ -74,7 +74,7 @@
 }
 
 
-.select-table-formulaire {
+.select-table-formulaire, .select-rename-table-formulaire {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ddd;
@@ -87,7 +87,7 @@
     appearance: none; /* Pour supprimer le style par défaut dans les autres navigateurs */
 }
 
-.select-table-formulaire {
+.select-table-formulaire, .select-rename-table-formulaire {
     margin-bottom: 20px;
     align-items: center;
     justify-content: center;

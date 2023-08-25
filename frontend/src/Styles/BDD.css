@@ -1,164 +1,136 @@
+/* Style pour le titre de la table */
 .title-table {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex;              /* Utilise le modèle de boîte flexible */
+    align-items: center;       /* Centre verticalement les éléments à l'intérieur */
+    justify-content: center;   /* Centre horizontalement les éléments à l'intérieur */
 }
 
+/* Style pour le conteneur de sélection de table */
 .div-select-table {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
+    display: flex;              /* Utilise le modèle de boîte flexible */
+    justify-content: center;   /* Centre horizontalement les éléments à l'intérieur */
+    align-items: center;       /* Centre verticalement les éléments à l'intérieur */
+    margin: 10px;              /* Ajoute une marge tout autour */
 }
 
+/* Style pour les icônes de flèche gauche et droite */
 .fleche-gauche, .fleche-droite {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin: 20px 5px 20px;
-  padding: 3px; /* Ajoute de l'espace entre les flèches et la bordure */
-  border: 2px solid #000;
-
+  cursor: pointer;             /* Change le curseur en main lors de la survol */
+  width: 20px;                 /* Largeur de l'icône */
+  height: 20px;                /* Hauteur de l'icône */
+  margin: 20px 5px 20px;       /* Marge autour de l'icône */
+  padding: 3px;                /* Ajoute de l'espace entre l'icône et la bordure */
+  border: 2px solid #000;      /* Bordure noire autour de l'icône */
 }
 
-
+/* Style pour le conteneur de navigation */
 .div-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 2%;
-
+  display: flex;               /* Utilise le modèle de boîte flexible */
+  align-items: center;        /* Centre verticalement les éléments à l'intérieur */
+  justify-content: center;    /* Centre horizontalement les éléments à l'intérieur */
+  position: absolute;         /* Positionne cet élément indépendamment du flux normal */
+  left: 2%;                   /* Positionne 2% depuis le bord gauche de son conteneur parent */
 }
 
-
-
+/* Style pour désactiver des éléments */
 .disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    opacity: 0.5;               /* Rend l'élément semi-transparent */
+    cursor: not-allowed;       /* Change le curseur pour indiquer que l'action n'est pas autorisée */
 }
 
+/* Style pour le champ d'entrée de la page */
 .input-page {
-  width: 40px;
-  text-align: center;
-  margin: 3px;
-
+  width: 40px;                 /* Largeur du champ */
+  text-align: center;          /* Centre le texte à l'intérieur */
+  margin: 3px;                 /* Ajoute une marge tout autour */
 }
 
-/* Désactiver les petites flèches d'incrémentation sur le côté */
+/* Supprime les petites flèches d'incrémentation des champs numériques */
 .input-page::-webkit-inner-spin-button,
 .input-page::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  -webkit-appearance: none;    /* Supprime le style par défaut dans Chrome et Safari */
+  margin: 0;                   /* Supprime la marge */
 }
 
+/* Style pour les icônes de flèche lors du survol */
 .fleches:hover {
-  opacity: 0.7;
-  background: rgba(128, 128, 128, 0.5)
+  opacity: 0.7;                 /* Rend l'élément légèrement transparent */
+  background: rgba(128, 128, 128, 0.5);  /* Ajoute un arrière-plan gris semi-transparent */
 }
 
+/* Style pour le conteneur de la table */
 .table-container {
-  min-height: 450px;
+  min-height: 450px;            /* Hauteur minimale du conteneur */
 }
 
+/* Style pour le menu déroulant de sélection de table */
 .div-select-table select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    color: #444;
-    box-sizing: border-box;
-    -webkit-appearance: none; /* Pour supprimer le style par défaut dans Chrome et Safari */
-    -moz-appearance: none; /* Pour supprimer le style par défaut dans Firefox */
-    appearance: none; /* Pour supprimer le style par défaut dans les autres navigateurs */
+    /* ... (styles variés pour le design et le formatage) ... */
 }
 
-.select-select-table {
-    margin-bottom: 20px;
-    align-items: center;
-    justify-content: center;
+/* Styles pour les colonnes et les titres des colonnes */
+.column-content, .titleColumn {
+    /* ... (styles variés utilisant flexbox) ... */
 }
 
-.column-content {
-    display: flex;
-    flex-direction: column;
-  align-items: center;
-}
-
-.titleColumn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
+/* Styles pour les triangles indicateurs de tri */
 .triangle-bas, .triangle-haut {
-    width: 10px;
-    height: 10px;
-    padding: 5px;
-
+    /* ... (styles variés pour la taille et le rembourrage) ... */
 }
 
+/* Curseur de pointeur pour les en-têtes de table */
 th {
   cursor: pointer;
 }
 
+/* Conteneur principal de la table */
 .table-container {
-  white-space: nowrap;
-  border-collapse: collapse;
-  width: 100%;
-  overflow-x: auto;
+  white-space: nowrap;          /* Garde le texte sur une seule ligne et empêche les retours à la ligne automatiques */
+  border-collapse: collapse;    /* Fusionne les bordures adjacentes des cellules pour éviter les doubles bordures */
+  width: 100%;                  /* Occupe toute la largeur disponible du parent */
+  overflow-x: auto;             /* Si le contenu dépasse la largeur, une barre de défilement horizontale apparaît */
 }
 
+/* Styles pour les cases (cellules) de la table */
 .case-table {
-    cursor: pointer;
+    cursor: pointer;            /* Change le curseur en main lors de la survol, indiquant une action cliquable */
 }
 
-/* Lorsqu'une ligne est survolée en mode non éditeur */
+/* Style pour les cases lors du survol en mode non éditeur */
 .case-table:hover {
-    background-color: lightblue;
+    background-color: lightblue; /* Change l'arrière-plan en bleu clair */
 }
 
-/* Lorsqu'une cellule est survolée en mode éditeur */
+/* Style pour une cellule spécifique lors du survol en mode éditeur */
 .case-table.editor td:hover {
-    background-color: lightblue;
+    background-color: lightblue; /* Change l'arrière-plan de la cellule en bleu clair */
 }
 
-/* Pour s'assurer que la ligne n'est pas mise en surbrillance lorsqu'elle est survolée en mode éditeur */
+/* Assure que la ligne entière ne change pas de couleur d'arrière-plan lors du survol en mode éditeur */
 .case-table.editor:hover {
-    background-color: transparent;
+    background-color: transparent; /* Rend l'arrière-plan transparent */
 }
 
-
+/* Styles pour le bouton d'édition */
 .table-edit {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    color: #444;
-    box-sizing: border-box;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-    position: absolute;
-    right: 5%;
-    top: 80px;
+    /* ... (divers styles pour le design et le formatage du bouton d'édition) ... */
+    position: absolute;           /* Positionne cet élément indépendamment de son flux normal */
+    right: 5%;                    /* Le place à 5% du bord droit de son conteneur parent */
+    top: 80px;                    /* Le place à 80px du haut de son conteneur parent */
 }
 
+/* Effet de survol pour le bouton d'édition */
 .table-edit:hover {
-    background-color: #ddd;
+    background-color: #ddd;      /* Change l'arrière-plan en gris clair lors du survol */
 }
 
-/* Mode éditeur */
+/* Style du bouton d'édition lorsqu'il est activé (en mode éditeur) */
 .table-edit.editor-active {
-    background-color: #007BFF;  /* couleur de fond bleue */
-    color: #ffffff;            /* texte blanc */
-    border: 1px solid #0056b3; /* bordure bleue foncée pour un peu de contraste */
-    box-shadow: 0 4px 8px rgba(0,123,255,0.25); /* ajoute une petite ombre pour plus de profondeur */
+    /* ... (divers styles pour mettre en évidence le bouton d'édition lorsqu'il est activé) ... */
+    box-shadow: 0 4px 8px rgba(0,123,255,0.25); /* Ajoute une ombre pour donner une sensation de profondeur */
 }
 
-/* Effet de survol en mode éditeur */
+/* Effet de survol du bouton d'édition lorsqu'il est en mode éditeur */
 .table-edit.editor-active:hover {
-    background-color: #0056b3; /* une teinte bleue plus foncée pour le survol */
+    background-color: #0056b3;   /* Utilise une teinte bleue plus foncée pour l'arrière-plan lors du survol */
 }

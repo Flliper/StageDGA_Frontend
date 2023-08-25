@@ -18,6 +18,8 @@ function ModificationBDDAddRow() {
     const [dataID, setDataID] = useState([]);
     const [isValidIDForDelete, setIsValidIDForDelete] = useState(false);
     const [isValidIDForNewRow, setIsValidIDForNewRow] = useState(false);
+    const [notNullColumns, setNotNullColumns] = useState([]);
+
 
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
@@ -70,96 +72,134 @@ function ModificationBDDAddRow() {
         }
     }, [selectedTable, columns]);
 
+    useEffect(() => {
+    if (selectedTable) {
+        axios.get(`http://localhost:8000/api/${selectedDB}/${selectedTable}/notNullColonnes`)
+        .then(response => setNotNullColumns(response.data.not_null_columns))
+        .catch(error => console.error('There was an error!', error));
+    }
+}, [selectedTable]);
+
 
     useEffect(() => {
+        // Vérifie si une clé primaire a été sélectionnée pour la suppression
         if (primaryKeyToDelete) {
+            // Vérifie si la clé primaire à supprimer est incluse dans 'dataID'
             setIsValidIDForDelete(dataID.includes(String(primaryKeyToDelete)));
         }
         else {
+            // Si aucune clé primaire n'est sélectionnée, le champ n'est pas valide
             setIsValidIDForDelete(false);
         }
     }, [primaryKeyToDelete]);
 
+
     useEffect(() => {
+        // Récupère l'ID de la nouvelle ligne
         const currentID = newRowData[columns[0]];
 
+        // Vérifie si l'ID est valide et unique
         if (currentID) {
-            const isIntegerID = Number.isInteger(Number(currentID));
-            const isUniqueID = !dataID.includes(String(currentID));
-            setIsValidIDForNewRow(isIntegerID && isUniqueID);
+            const isIntegerID = Number.isInteger(Number(currentID)); // Vérifie si l'ID est un entier
+            const isUniqueID = !dataID.includes(String(currentID)); // Vérifie si l'ID est unique
+            setIsValidIDForNewRow(isIntegerID && isUniqueID); // Met à jour le statut de validation de l'ID pour la nouvelle ligne
         } else {
-            setIsValidIDForNewRow(false);
+            setIsValidIDForNewRow(false); // Si aucun ID n'est fourni, le champ n'est pas valide
         }
     }, [newRowData]);
 
-    const handleRowOperation = () => {
-    axios.post(`http://localhost:8000/api/${selectedDB}/manageRow`, {
-        operation: operation,
-        selectedTable: selectedTable,
-        newRowData: newRowData,
-        primaryKeyToDelete: primaryKeyToDelete,
-        columns : columns
-    },{
-        headers: {
-            'Authorization': `Token ${authContext.user.token}`
-        }
-    })
-    .then(response => {
-        if (response.data.status === "success") {
-            setMessage("Opération réussie");
-            setSelectedDB(null);
-            setOperation(null);
-            setPrimaryKeyToDelete('');
-            setNewRowData({});
-            // setTimeout(() => setMessage(''), 3000);
-        } else {
-            setMessage("Opération échouée");
-            // setTimeout(() => setMessage(''), 3000);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
 
+    const handleRowOperation = () => {
+        // Envoie une requête POST au serveur pour effectuer l'opération sur la ligne
+        axios.post(`http://localhost:8000/api/${selectedDB}/manageRow`, {
+            operation: operation,
+            selectedTable: selectedTable,
+            newRowData: newRowData,
+            primaryKeyToDelete: primaryKeyToDelete,
+            columns: columns
+        },{
+            headers: {
+                'Authorization': `Token ${authContext.user.token}` // Autorisation à l'aide d'un token
+            }
+        })
+        .then(response => {
+            // Si la réponse du serveur indique que l'opération a réussi
+            if (response.data.status === "success") {
+                setMessage("Opération réussie"); // Affiche un message de succès
+                setSelectedDB(null);
+                setOperation(null);
+                setPrimaryKeyToDelete('');
+                setNewRowData({});
+                // La ligne ci-dessous a été commentée, mais elle permettrait d'effacer le message après 3 secondes
+                // setTimeout(() => setMessage(''), 3000);
+            } else {
+                setMessage("Opération échouée"); // Sinon, affiche un message d'échec
+                // La ligne ci-dessous a été commentée, mais elle permettrait d'effacer le message après 3 secondes
+                // setTimeout(() => setMessage(''), 3000);
+            }
+        })
+        .catch(error => {
+            // Log l'erreur en cas d'échec de la requête
+            console.error('Error:', error);
+        });
+    }
+
+    // Ce useEffect est déclenché lorsque la valeur de 'message' change
     useEffect(() => {
         let timeoutId;
+        // Si un message est défini, programme son effacement après 3 secondes
         if (message !== '') {
             timeoutId = setTimeout(() => setMessage(''), 3000);
         }
-        // Effect cleanup: clear the timeout when the effect re-runs or the component unmounts
+        // Nettoyage de l'effet : annule le timeout lorsque l'effet est réexécuté ou lorsque le composant est démonté
         return () => {
             clearTimeout(timeoutId);
         };
     }, [message]);
 
 
+
     return (
+        // Conteneur principal pour le formulaire de manipulation des lignes
         <div className="container-formulaire-row">
+            {/* Si des bases de données (dbs) sont fournies */}
             {dbs &&
                 <div className="block-formulaire-row">
                     <h2> Choisissez une BDD à modifier </h2>
-                <div className="db-buttons">
-                    {Object.keys(dbs).map(dbType => (
-                    dbs[dbType].map(db => (
-                        <button
-                            key={db}
-                            className={`db-button ${db === selectedDB ? 'active' : ''}`}
-                            onClick={() => {setSelectedDB(selectedDB === db ? null : db);
-                                setSelectedTable(null); setOperation(null);
-                            setIsValidIDForDelete(false); setIsValidIDForNewRow(false);}}
-                        >
-                            {db}
-                        </button>
-                    ))
-                ))}
-                </div>
+                    <div className="db-buttons">
+                        {/* Cartographie des types de bases de données (par exemple MySQL, PostgreSQL, etc.) */}
+                        {Object.keys(dbs).map(dbType => (
+                            // Cartographie de chaque base de données dans le type donné
+                            dbs[dbType].map(db => (
+                                <button
+                                    key={db}
+                                    // Ajoute la classe 'active' si la base de données est actuellement sélectionnée
+                                    className={`db-button ${db === selectedDB ? 'active' : ''}`}
+                                    // Gère le changement de la base de données sélectionnée
+                                    onClick={() => {
+                                        setSelectedDB(selectedDB === db ? null : db);
+                                        setSelectedTable(null);
+                                        setOperation(null);
+                                        setIsValidIDForDelete(false);
+                                        setIsValidIDForNewRow(false);
+                                    }}
+                                >
+                                    {db}
+                                </button>
+                            ))
+                        ))}
+                    </div>
                 </div>
             }
+
+            {/* Si une base de données est sélectionnée, affichez le sélecteur de table */}
             {selectedDB && (
                 <select className="select-ligne-formulaire" onChange={e => {
-                    setSelectedTable(e.target.value); setOperation(null);
-                            setIsValidIDForDelete(false); setIsValidIDForNewRow(false)}}>
+                    setSelectedTable(e.target.value);
+                    setOperation(null);
+                    setIsValidIDForDelete(false);
+                    setIsValidIDForNewRow(false);
+                }}>
                     <option value="">Sélectionnez une table</option>
                     {tables.map(table => (
                         <option key={table} value={table}>{table}</option>
@@ -167,39 +207,59 @@ function ModificationBDDAddRow() {
                 </select>
             )}
 
+            {/* Si une table et une base de données sont sélectionnées, donnez des options pour ajouter ou supprimer une ligne */}
             {selectedTable && selectedDB && (
                 <div className="block-formulaire-row">
                     <h2> Que voulez vous faire ? </h2>
                     <div className="db-buttons">
+                        {/* Bouton pour choisir l'opération "ajouter" */}
                         <button className={`db-button ${operation === 'add' ? 'active' : ''}`} onClick={() => setOperation(operation === 'add' ? null : 'add')}>Ajouter une ligne</button>
+                        {/* Bouton pour choisir l'opération "supprimer" */}
                         <button className={`db-button ${operation === 'delete' ? 'active' : ''}`} onClick={() => setOperation(operation === 'delete' ? null : 'delete')}>Supprimer une ligne</button>
                     </div>
                 </div>
             )}
 
+            {/* Si l'opération "ajouter" est sélectionnée et qu'une table est choisie, affichez le formulaire d'ajout */}
             {operation === 'add' && selectedTable &&
                 <div className="global-div-row">
-                    {columns.map((column, index) => (
-                        <div className="div-row" key={index}>
-                            <label>{column}</label>
-                            <input
-                                className={'input-row ' + (index === 0 ? (isValidIDForNewRow ? "valid-border" : "invalid-border") : "")}
-                                type="text"
-                                placeholder={`Valeur pour ${column}`}
-                                value={newRowData[column]}
-                                onChange={e => setNewRowData({...newRowData, [column]: e.target.value})}
-                            />
-                        </div>
-                    ))}
+                    {columns.map((column, index) => {
+                        // Vérifications pour déterminer le style et la validation de chaque champ
+                        const isPrimaryKey = index === 0;
+                        const isNotNull = notNullColumns.includes(column);
+                        const hasValidValue = newRowData[column] && newRowData[column].trim() !== '';
+                        const isValid = !isNotNull || (isNotNull && hasValidValue);
+                        // Classe CSS par défaut pour les champs
+                        let inputClass = 'input-row';
+
+                        if (isPrimaryKey) {
+                            inputClass += isValidIDForNewRow ? ' valid-border' : ' invalid-border';
+                        } else if (isNotNull) {
+                            inputClass += isValid ? ' valid-border' : ' invalid-border';
+                        }
+
+                        return (
+                            <div className="div-row" key={index}>
+                                <label>{column}</label>
+                                <input
+                                    className={inputClass}
+                                    type="text"
+                                    placeholder={`Valeur pour ${column}`}
+                                    value={newRowData[column] || ''}
+                                    onChange={e => setNewRowData({...newRowData, [column]: e.target.value})}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             }
 
-
-
+            {/* Si l'opération "supprimer" est choisie et qu'une table est sélectionnée, affichez le champ pour la clé primaire */}
             {operation === 'delete' && selectedTable && (
-                <div >
+                <div>
                     <label>Clé primaire de la ligne à supprimer</label>
-                    <input className={isValidIDForDelete ? "valid-border" : "invalid-border"}
+                    <input
+                        className={isValidIDForDelete ? "valid-border" : "invalid-border"}
                         type="text"
                         placeholder="Clé primaire"
                         value={primaryKeyToDelete}
@@ -209,25 +269,42 @@ function ModificationBDDAddRow() {
             )}
 
 
+            {/* Affichez le bouton "Confirmer" si une opération est choisie (ajout ou suppression) */}
             {((operation === 'add') || (operation === 'delete')) && (
                 <button className="button-submit" onClick={() => {
-                    if (operation === 'add' && !isValidIDForNewRow)
-                        if (newRowData[columns[0]] === '')
-                            setMessage("Aucune clé primaire n'a été spécifiée");
-                        else
-                        setMessage("La clé primaire existe déjà ou n'est pas un entier");
-                    else if (operation === 'delete' && !isValidIDForDelete)
-                        setMessage("La clé primaire n'existe pas");
-                    else
-                    handleRowOperation();
+                    // Vérifiez si toutes les colonnes qui ne peuvent pas être nulles ont des valeurs
+                    const allNotNullColumnsHaveValues = notNullColumns.every(col => newRowData[col] && newRowData[col].trim() !== '');
+                    if (operation === 'add') {
+                        // Validation pour l'opération "ajout"
+                        if (!isValidIDForNewRow) {
+                            if (newRowData[columns[0]] === '') {
+                                setMessage("Aucune clé primaire n'a été spécifiée");
+                            } else {
+                                setMessage("La clé primaire existe déjà ou n'est pas un entier");
+                            }
+                        } else if (!allNotNullColumnsHaveValues) {
+                            setMessage("Veuillez remplir tous les champs obligatoires.");
+                        } else {
+                            // Si tout est valide, procédez à l'opération d'ajout
+                            handleRowOperation();
+                        }
+                    } else if (operation === 'delete') {
+                        // Validation pour l'opération "suppression"
+                        if (!isValidIDForDelete) {
+                            setMessage("La clé primaire n'existe pas");
+                        } else {
+                            // Si tout est valide, procédez à l'opération de suppression
+                            handleRowOperation();
+                        }
+                    }
                 }}>Confirmer</button>
             )}
-            { message &&
+
+            {/* Affiche un message s'il est défini, avec des classes conditionnelles pour le style selon le type de message */}
+            {message &&
             <div className={`message ${message === 'Opération réussie' ? 'success' : 'error'}`}>
-              {message}
-            </div> }
-
-
+                {message}
+            </div>}
         </div>
     );
 }

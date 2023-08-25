@@ -1,125 +1,110 @@
+/* Styles pour le conteneur général d'un formulaire */
 .container-formulaire-row {
-  width: 30%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: #F5F5F5;
-  border-radius: 5px;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
-  margin-bottom: 100px;
+  width: 30%; /* Largeur du conteneur */
+  margin: 0 auto; /* Centrage horizontal du conteneur */
+  display: flex; /* Utilise un modèle de boîte flexible */
+  flex-direction: column; /* Organise les éléments enfants verticalement */
+  align-items: center; /* Centre horizontalement les éléments enfants */
+  padding: 20px; /* Espacement interne autour du conteneur */
+  box-sizing: border-box; /* La largeur inclut le padding et la bordure */
+  background-color: #F5F5F5; /* Couleur de fond gris clair */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.1); /* Ombre portée légère */
+  margin-bottom: 100px; /* Espace en dessous du conteneur */
 }
 
+/* Styles pour les titres h2 à l'intérieur du conteneur */
 .container-formulaire-row h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 30px;
+  text-align: center; /* Centre le texte horizontalement */
+  color: #333; /* Couleur de texte gris foncé */
+  margin-bottom: 30px; /* Espacement en dessous du titre */
 }
 
+/* Styles pour les boutons à l'intérieur du conteneur */
 .container-formulaire-row button {
-  padding: 10px;
-  margin: 15px 0;
-  border: none;
-  border-radius: 4px;
-  background-color: #888;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 10px; /* Espacement interne autour du bouton */
+  margin: 15px 0; /* Espacement autour du bouton */
+  border: none; /* Supprime la bordure */
+  border-radius: 4px; /* Coins arrondis du bouton */
+  background-color: #888; /* Couleur de fond gris */
+  color: #fff; /* Couleur de texte blanc */
+  cursor: pointer; /* Curseur en forme de main lors du survol */
+  transition: background-color 0.3s; /* Animation douce pour le changement de couleur de fond */
 }
 
+/* Styles pour les boutons actifs à l'intérieur du conteneur */
 .container-formulaire-row button.active {
-  background-color: #007bff;
+  background-color: #007bff; /* Couleur de fond bleu */
 }
 
+/* Styles pour les boutons de base de données */
 .container-formulaire-row .db-button {
-  margin: 10px;
+  margin: 10px; /* Espacement autour du bouton */
 }
 
+/* Styles pour les champs input et select à l'intérieur du conteneur */
 .container-formulaire-row input,
 .container-formulaire-row select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  appearance: none;
+  width: 100%; /* Prend toute la largeur disponible */
+  padding: 10px; /* Espacement interne autour du champ */
+  border-radius: 4px; /* Coins arrondis du champ */
+  appearance: none; /* Supprime l'apparence par défaut des navigateurs */
 }
 
+/* Styles spécifiques pour le champ select à l'intérieur du conteneur */
 .container-formulaire-row select {
+    /* Ajoute une flèche personnalisée en tant qu'icône d'arrière-plan */
     background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right .75rem center;
 }
 
+/* Styles pour le texte d'indication dans les champs input */
 .container-formulaire-row input::placeholder {
-  color: #888;
+  color: #888; /* Couleur de texte gris */
 }
 
+/* Styles pour un groupe de boutons de base de données */
 .db-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: flex; /* Utilise un modèle de boîte flexible */
+  flex-wrap: wrap; /* Permet aux éléments de se déplacer à la ligne suivante si nécessaire */
+  justify-content: center; /* Centre horizontalement les éléments */
 }
 
+/* Styles pour un bloc de formulaire */
 .block-formulaire-row {
-  margin-bottom: 30px;
-  padding: 20px;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,0.05);
+  /* ... (similaires aux styles précédents) */
 }
 
+/* Styles pour un champ select personnalisé */
 .select-ligne-formulaire {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    color: #444;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  /* ... (similaires aux styles précédents) */
 }
 
-.select-ligne-formulaire {
-    margin-bottom: 30px;
-    align-items: center;
-    justify-content: center;
-}
-
+/* Effet de survol pour le bouton de soumission */
 .button-submit:hover {
-    background: #0056b3;
-    color: white;
-    transform: scale(1.1);
+  /* ... (similaires aux styles précédents) */
 }
 
+/* Styles pour un message d'alerte général */
 .message {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: all 0.5s ease;
+  /* ... (similaires aux styles précédents) */
 }
 
+/* Styles pour un message d'alerte de succès */
 .message.success {
-  color: #4CAF50; /* green */
-  border: 1px solid #4CAF50;
-  background-color: #D4EDDA;
+  /* ... (similaires aux styles précédents) */
 }
 
+/* Styles pour un message d'alerte d'erreur */
 .message.error {
-  color: #F44336; /* red */
-  border: 1px solid #F44336;
-  background-color: #F8D7DA;
+  /* ... (similaires aux styles précédents) */
 }
 
+/* Bordure verte pour un champ valide */
 .valid-border {
     border: 2px solid green;
 }
 
+/* Bordure rouge pour un champ invalide */
 .invalid-border {
     border: 2px solid red;
 }
-

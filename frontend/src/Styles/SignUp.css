@@ -1,0 +1,94 @@
+.container-formulaire-user {
+  width: 30%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #F5F5F5;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+}
+
+.block-formulaire-user {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.05);
+}
+
+.block-formulaire-user h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.user-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Espace entre les boutons */
+}
+
+.user-button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #888;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.user-button.active {
+  background-color: #007bff;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  appearance: none;
+}
+
+.input-field::placeholder {
+  color: #888;
+}
+
+.button-submit {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 4px;
+  background-color: #888;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-submit:hover {
+  background-color: #007bff;
+}
+
+.message {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+.message.success {
+  color: #4CAF50; /* green */
+  border: 1px solid #4CAF50;
+  background-color: #D4EDDA;
+}
+
+.message.error {
+  color: #F44336; /* red */
+  border: 1px solid #F44336;
+  background-color: #F8D7DA;
+}

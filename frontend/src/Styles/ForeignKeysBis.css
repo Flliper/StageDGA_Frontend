@@ -1,127 +1,134 @@
+/* Affiche les éléments en ligne avec espacement égal */
 .div-select-table {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin: 10px; /* Espace autour de l'élément */
 }
 
+/* Définit le style des flèches */
 .fleche-gauche, .fleche-droite {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin: 20px 5px 20px;
-  padding: 3px; /* Ajoute de l'espace entre les flèches et la bordure */
-  border: 2px solid #000;
-
+    cursor: pointer; /* Change le curseur en forme de main */
+    width: 20px; /* Largeur */
+    height: 20px; /* Hauteur */
+    margin: 20px 5px 20px; /* Espace autour (haut, droite/gauche, bas) */
+    padding: 3px; /* Espace intérieur */
+    border: 2px solid #000; /* Bordure de 2 pixels de couleur noire */
 }
 
-
+/* Aligne les éléments horizontalement au centre */
 .navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-
-.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.input-page {
-  width: 40px;
-  text-align: center;
-  margin: 3px;
-
-}
-
-/* Désactiver les petites flèches d'incrémentation sur le côté */
-.input-page::-webkit-inner-spin-button,
-.input-page::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.fleches:hover {
-  opacity: 0.7;
-  background: rgba(128, 128, 128, 0.5)
-}
-
-
-.div-select-table select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    color: #444;
-    box-sizing: border-box;
-    -webkit-appearance: none; /* Pour supprimer le style par défaut dans Chrome et Safari */
-    -moz-appearance: none; /* Pour supprimer le style par défaut dans Firefox */
-    appearance: none; /* Pour supprimer le style par défaut dans les autres navigateurs */
-}
-
-.select-table {
-    margin-bottom: 20px;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* Style pour les éléments qui ne peuvent pas être interagis */
+.disabled {
+    opacity: 0.5; /* Réduit la transparence */
+    cursor: not-allowed; /* Change le curseur pour indiquer l'interdiction */
+}
+
+/* Style pour un champ de saisie de pagination */
+.input-page {
+    width: 40px; /* Largeur */
+    text-align: center; /* Centre le texte */
+    margin: 3px; /* Espace autour */
+}
+
+/* Supprime les flèches de changement de valeur pour certains navigateurs */
+.input-page::-webkit-inner-spin-button,
+.input-page::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Changement de style lors de la survol des flèches */
+.fleches:hover {
+    opacity: 0.7; /* Diminue la transparence */
+    background: rgba(128, 128, 128, 0.5); /* Ajoute un fond semi-transparent gris */
+}
+
+/* Style pour une liste déroulante */
+.div-select-table select {
+    padding: 10px; /* Espace intérieur */
+    font-size: 16px; /* Taille du texte */
+    border: 1px solid #ddd; /* Bordure fine gris clair */
+    border-radius: 4px; /* Coins arrondis */
+    background-color: #f8f8f8; /* Couleur de fond */
+    color: #444; /* Couleur du texte */
+    box-sizing: border-box; /* Inclut la bordure et le padding dans la taille totale */
+    -webkit-appearance: none; /* Supprime le style par défaut (navigateurs spécifiques) */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Style pour l'élément contenant la liste déroulante */
+.select-table {
+    margin-bottom: 20px; /* Espace en bas */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Affiche des éléments dans une colonne et les centre */
 .column-content {
     display: flex;
     flex-direction: column;
-  align-items: center;
+    align-items: center;
 }
 
+/* Aligne les éléments horizontalement avec un espacement égal */
 .titleColumn {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+/* Style pour des éléments en forme de triangle */
 .triangle-bas, .triangle-haut {
-    width: 10px;
-    height: 10px;
-    padding: 5px;
-
+    width: 10px; /* Largeur */
+    height: 10px; /* Hauteur */
+    padding: 5px; /* Espace intérieur */
 }
 
+/* Change le curseur pour les en-têtes de tableau */
 th {
-  cursor: pointer;
+    cursor: pointer;
 }
 
+/* Change le curseur pour les cellules du tableau */
 .case-table {
     cursor: pointer;
 }
 
+/* Changement de style lors de la survol des cellules du tableau */
 .case-table:hover {
-    background-color: lightblue;
-    cursor: pointer;
+    background-color: lightblue; /* Change la couleur de fond */
 }
 
+/* Aligne les éléments horizontalement au centre */
 .header {
     display: flex;
     align-items: center;
 }
 
+/* Espace à gauche pour le titre de la table */
 .table-title {
     display: flex;
     margin-right: 0;
-    margin-left: 40px;
+    margin-left: 40px; /* Espace à gauche */
 }
 
-/* Gérer le scroll horizontal */
-
+/* Permet au tableau de défiler horizontalement si nécessaire */
 .table {
-    white-space: nowrap;
-    /*display: block;*/
-    overflow-x: auto;
+    white-space: nowrap; /* Garde le contenu sur une seule ligne */
+    overflow-x: auto; /* Autorise le défilement horizontal */
 }
 
+/* Style pour le conteneur des clés étrangères */
 .block-table-foreign-keys {
     display: block;
-    overflow-x: auto;
-    width: 100%;
-    margin-bottom: 50px;
+    overflow-x: auto; /* Autorise le défilement horizontal */
+    width: 100%; /* Prend toute la largeur disponible */
+    margin-bottom: 50px; /* Espace en bas */
 }

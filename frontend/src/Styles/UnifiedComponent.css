@@ -1,149 +1,144 @@
+/* Conteneur principal des onglets */
 .tab-container-onglet {
-    width: 30%;
-    min-width: 30%;
-    padding: 20px;
-    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
-    background-color: #fff;
-    border-radius: 8px;
-    margin-left: 0;
-    margin-right: 20px;
-
+    width: 30%; /* Largeur fixe du conteneur à 30% du conteneur parent */
+    min-width: 30%; /* Assure que la largeur ne descende jamais en dessous de 30% */
+    padding: 20px; /* Espace intérieur autour du contenu */
+    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2); /* Ombre portée légère */
+    background-color: #fff; /* Couleur de fond blanc */
+    border-radius: 8px; /* Coins arrondis */
+    margin-left: 0; /* Espace à gauche */
+    margin-right: 20px; /* Espace à droite */
 }
 
+/* Styles pour le titre principal et sous-titre des onglets */
 .titre-onglet {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+    text-align: center;  /* Centre le texte horizontalement */
+    color: #333; /* Couleur de texte gris foncé */
+    margin-bottom: 20px; /* Espace en bas */
 }
 
 .titre-onglet h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
+    font-size: 2em; /* Taille du texte (2 fois la taille normale) */
+    margin-bottom: 10px; /* Espace en dessous */
 }
-
 .titre-onglet h2 {
-    font-size: 1.5em;
-    color: #777;
+    font-size: 1.5em; /* Taille du texte (1,5 fois la taille normale) */
+    color: #777; /* Couleur de texte gris clair */
 }
 
-/* Styles des onglets */
-
+/* Styles pour la liste d'onglets de la bibliothèque React Tabs */
 .react-tabs__tab-list {
-    border-bottom: 1px solid #aaa;
-    margin: 0;
-    padding: 0;
+    border-bottom: 1px solid #aaa; /* Bordure inférieure gris clair */
+    margin: 0; /* Retire les marges */
+    padding: 0; /* Retire l'espacement intérieur */
 }
 
+/* Style général pour un onglet */
 .react-tabs__tab {
-    display: inline-block;
-    list-style: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: #777;
-    transition: color 0.3s ease;
+    display: inline-block; /* Permet à l'élément de se comporter comme un bloc mais aligné comme du texte inline */
+    list-style: none; /* Retire le style de liste */
+    padding: 10px 20px; /* Espace intérieur */
+    cursor: pointer; /* Change le curseur en forme de main */
+    border: none; /* Supprime les bordures */
+    background: none; /* Pas de couleur de fond */
+    color: #777; /* Couleur de texte gris clair */
+    transition: color 0.3s ease; /* Animation douce pour le changement de couleur */
 }
 
+/* Style pour l'onglet actuellement sélectionné */
 .react-tabs__tab--selected {
-    color: #333;
-    border-bottom: 2px solid #333;
+    color: #333; /* Couleur de texte gris foncé */
+    border-bottom: 2px solid #333; /* Bordure inférieure pour indiquer la sélection */
 }
 
-/* Styles du contenu de l'onglet */
-
+/* Styles pour le contenu de chaque onglet */
 .react-tabs__tab-panel {
-    padding: 20px;
-    background: #f5f5f5;
-    border-radius: 4px;
+    padding: 20px; /* Espace intérieur */
+    background: #f5f5f5; /* Couleur de fond gris très clair */
+    border-radius: 4px; /* Coins arrondis */
 }
 
+/* Masque les panneaux d'onglets qui ne sont pas actuellement visibles */
 .react-tabs__tab-panel--hidden {
-    display: none;
+    display: none; /* Cache l'élément */
 }
 
-/* Style du lien */
-
+/* Styles pour tous les liens */
 a {
-    color: #007bff;
-    text-decoration: none;
+    color: #007bff; /* Couleur de texte bleu */
+    text-decoration: none; /* Pas de soulignement */
 }
 
+/* Styles pour les liens lorsqu'ils sont survolés */
 a:hover {
-    color: #0056b3;
-    text-decoration: underline;
+    color: #0056b3; /* Couleur de texte bleu foncé au survol */
+    text-decoration: underline; /* Soulignement au survol */
 }
 
+/* Animation qui fait clignoter un élément */
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
     100% { opacity: 1; }
 }
 
+/* Styles pour un élément en cours de chargement */
 .loading {
-    font-size: 5em; /* Ajustez la taille comme vous le souhaitez */
-    color: #343a40; /* La couleur du texte */
-    position: absolute; /* La positionne absolument dans son conteneur parent */
-    top: 50%; /* La positionne au centre verticalement */
-    left: 50%; /* La positionne au centre horizontalement */
-    transform: translate(-50%, -50%); /* Ajuste la position pour qu'elle soit parfaitement centrée */
-    animation: blink 1s linear infinite; /* Applique l'animation */
+    font-size: 5em; /* Taille de texte très grande */
+    color: #343a40; /* Couleur de texte gris foncé */
+    position: absolute; /* Positionnement absolu par rapport à son parent relatif le plus proche */
+    top: 50%; /* Centrage vertical */
+    left: 50%; /* Centrage horizontal */
+    transform: translate(-50%, -50%); /* Ajuste le centrage */
+    animation: blink 1s linear infinite; /* Applique l'animation clignotante */
 }
 
 .react-tabs__tab:focus:after {
-    display:none;
+    display:none; /* Supprime le pseudo-élément ajouté après un onglet lorsqu'il est focalisé */
 }
 
+/* Styles pour un élément cliquable dans le contexte d'un onglet */
 .clickable-element-onglet {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 20px; /* Augmentez le padding pour donner plus d'espace */
-    margin-bottom: 10px; /* Ajoutez une marge pour espacer les éléments entre eux */
-    background-color: #f8f9fa; /* Un fond clair pour faire ressortir l'élément */
-    border: 1px solid #dee2e6; /* Une bordure subtile pour délimiter l'élément */
-    border-radius: 5px; /* Les coins arrondis donnent un aspect plus doux et moderne */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Une légère ombre pour donner une impression de relief */
-    transition: all 0.2s ease-in-out; /* Animer tous les changements pour une transition plus douce */
+    display: flex; /* Utilise un modèle de boîte flexible pour positionner les enfants */
+    align-items: center; /* Centre verticalement les éléments enfants */
+    justify-content: space-between; /* Espacement égal entre les éléments enfants */
+    padding: 15px 20px; /* Espace intérieur de 15px en haut et en bas, 20px à gauche et à droite */
+    margin-bottom: 10px; /* Espace de 10px en dessous de l'élément */
+    background-color: #f8f9fa; /* Couleur de fond légèrement grise */
+    border: 1px solid #dee2e6; /* Bordure fine grise tout autour */
+    border-radius: 5px; /* Arrondit les coins de la bordure */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Petite ombre portée sous l'élément */
+    transition: all 0.2s ease-in-out; /* Animation douce lors des changements de style */
 }
 
+/* Effet de survol pour l'élément cliquable */
 .clickable-element-onglet:hover {
-    cursor: pointer; /* Change le curseur en main lorsque l'élément est survolé */
-    color: #007bff; /* La couleur du texte change au survol */
-    box-shadow: 0 0 10px #007bff; /* Ajoute une ombre de boîte lorsqu'il est survolé */
-    transform: scale(1.02); /* Fait légèrement grossir l'élément lorsqu'il est survolé */
+    cursor: pointer; /* Change le curseur en forme de main lors du survol */
+    color: #007bff; /* Couleur du texte en bleu lors du survol */
+    box-shadow: 0 0 10px #007bff; /* Ombre portée bleue autour de l'élément lors du survol */
+    transform: scale(1.02); /* Augmente légèrement la taille de l'élément lors du survol */
 }
 
-/* Vous pouvez également ajouter des styles pour le focus afin d'améliorer l'accessibilité */
-
+/* Styles pour améliorer l'accessibilité lorsque l'élément est focalisé */
 .clickable-element-onglet:focus {
-    outline: none; /* Supprime l'outline par défaut qui peut être inesthétique */
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Ajoute une ombre de focus bleue */
+    outline: none; /* Supprime le contour par défaut lors de la mise au point */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Ajoute une ombre portée bleue pour indiquer la mise au point */
 }
 
-/*!* Ajoutés *!*/
-
+/* Container principal pour certains composants */
 .global {
-    display: flex;
+    display: flex; /* Utilise un modèle de boîte flexible pour positionner les enfants */
 }
 
+/* Styles pour une table ou un conteneur similaire */
 .block-table {
-    margin-bottom: 50px;
+    margin-bottom: 50px; /* Ajoute un espace de 50px en dessous de la table ou du conteneur */
 }
 
-/*.div-foreignKeys {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*table {*/
-/*    overflow-x: auto;*/
-/*    white-space: nowrap;*/
-/*    display: block;*/
-/*}*/
-
+/* Styles pour un div qui pourrait contenir des clés étrangères ou des liens */
 .div-foreign-keys {
-    overflow-x: auto;
-    white-space: nowrap;
-    display: block;
+    overflow-x: auto; /* Permet le défilement horizontal si le contenu dépasse la largeur */
+    white-space: nowrap; /* Empêche le contenu de passer à la ligne suivante, ce qui le force à rester sur une seule ligne */
+    display: block; /* Force l'élément à être affiché comme un bloc */
 }
+

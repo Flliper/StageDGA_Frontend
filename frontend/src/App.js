@@ -20,6 +20,8 @@ import ModificationBDDEditCell from "./Components/ModificationBDDEditCell";
 import ModificationBDDAddTable from "./Components/ModificationBDDAddTable";
 import ModificationBDDAddColumn from "./Components/ModificationBDDAddColumn";
 import ModificationBDDAddRow from "./Components/ModificationBDDAddRow";
+import SignUp from "./Components/SignUp";
+import ErrorComponent from "./Components/ErrorComponent";
 
 
 
@@ -55,8 +57,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Accueil setSelectedTable={setSelectedTable} setTableNames={setTableNames}
               setSort={setSort} setFilters={setFilters}/>}/>
+              {/*<Route path="/signUp" element={<SignUp />}/>*/}
               <Route path="/connexion" element={<Connexion />}/>
-              <Route path="/connexion/test" element={<Test />}/>
+              <Route element={<ErrorComponent />} />
               <Route path="/modification/manageTable" element={<ModificationBDDAddTable />}/>
               <Route path="/modification/manageColumn" element={<ModificationBDDAddColumn />}/>
               <Route path="/modification/manageRow" element={<ModificationBDDAddRow />}/>
@@ -78,6 +81,7 @@ function App() {
               }/>
               <Route path="/:bdd/occurrences/:table/:columnName/:columnValue" element={<ForeignKeys allForeignKeys={allForeignKeys}
               allTableColumns={allTableColumns} allPrimaryKeys={allPrimaryKeys} />} />
+              <Route element={<ErrorComponent />} />
             </Routes>
           </div>
         </div>

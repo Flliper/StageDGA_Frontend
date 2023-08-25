@@ -1,54 +1,56 @@
+/* Le style pour le conteneur principal de la page d'accueil */
 .accueil-container {
-  display: flex;
-  justify-content: space-evenly;
-  height: 100vh;
+  display: flex; /* Utilisez le modèle de boîte flexible pour organiser les éléments à l'intérieur */
+  justify-content: space-evenly; /* Distribuez uniformément les éléments enfants horizontalement */
+  height: 100vh; /* Faites en sorte que le conteneur prenne la hauteur totale de la fenêtre de visualisation */
 }
 
+/* Le style pour le conteneur de la base de données (BDD) */
 .bdd-container {
-  width: 300px;
-  height: 80%;
-  margin: 10px;
-  padding: 10px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: scale(1.0);
-  transition: all 0.2s ease-in-out;
+  width: 300px; /* Fixez la largeur à 300 pixels */
+  height: 80%; /* Réglez la hauteur à 80% du conteneur parent */
+  margin: 10px; /* Ajoutez une marge extérieure de 10 pixels autour de l'élément */
+  padding: 10px; /* Ajoutez un rembourrage interne de 10 pixels à l'élément */
+  background-size: contain; /* Ajustez l'image d'arrière-plan pour s'adapter à l'intérieur de l'élément sans recadrer */
+  background-repeat: no-repeat; /* Empêchez l'image d'arrière-plan de se répéter */
+  background-position: center; /* Centrez l'image d'arrière-plan */
+  border: 1px solid black; /* Ajoutez une bordure noire d'une épaisseur de 1 pixel */
+  display: flex; /* Utilisez le modèle de boîte flexible pour organiser les éléments à l'intérieur */
+  align-items: center; /* Centrez verticalement les éléments enfants */
+  justify-content: center; /* Centrez horizontalement les éléments enfants */
+  transform: scale(1.0); /* Gardez l'élément à sa taille d'origine (100%) */
+  transition: all 0.2s ease-in-out; /* Ajoutez une transition pour toutes les modifications de propriété sur cet élément, cela prendra 0.2 secondes */
 }
 
+/* Le style pour le conteneur de la BDD lorsqu'il est survolé avec la souris */
 .bdd-container:hover {
-  transform: scale(1.1);
-  transition: all 0.2s ease-in-out;
+  transform: scale(1.1); /* Agrandissez l'élément de 10% lorsque survolé */
+  transition: all 0.2s ease-in-out; /* Appliquez une transition de 0.2 secondes pour cette transformation */
 }
 
-
+/* Le style pour les tables */
 table {
-  border-collapse: collapse;
-  width: 100%;
+  border-collapse: collapse; /* Combine les bordures adjacentes en une seule */
+  width: 100%; /* Assurez-vous que la table prend toute la largeur de son conteneur parent */
 }
 
-
+/* Le style pour les en-têtes de colonne (th) et les cellules de données (td) dans les tables */
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-
+  border: 1px solid #ddd; /* Ajoutez une bordure grise claire autour des cellules */
+  padding: 8px; /* Ajoutez un rembourrage de 8 pixels à l'intérieur des cellules */
+  text-align: left; /* Alignez le texte à gauche dans les cellules */
 }
 
+/* Le style spécifique pour les en-têtes de colonne dans les tables */
 th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #4CAF50;
-  color: white;
+  padding-top: 12px; /* Ajoutez un rembourrage supérieur de 12 pixels */
+  padding-bottom: 12px; /* Ajoutez un rembourrage inférieur de 12 pixels */
+  text-align: left; /* Alignez le texte à gauche */
+  background-color: #4CAF50; /* Mettez un arrière-plan vert sur les en-têtes */
+  color: white; /* Faites en sorte que le texte des en-têtes soit blanc */
 }
 
+/* Le style pour le contenu principal de la page */
 .main-content {
-    padding-top: 70px; /* Ajustez cette valeur en fonction de la hauteur de la barre de navigation */
+    padding-top: 70px; /* Ajoutez un rembourrage supérieur de 70 pixels (pour ajuster l'espace en fonction de la hauteur de la barre de navigation) */
 }
-
-

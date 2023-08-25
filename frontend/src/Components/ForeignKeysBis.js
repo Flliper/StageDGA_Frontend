@@ -11,13 +11,12 @@ import {useEffect, useState} from "react";
 
 
 
-function ForeignKeysBis({table, columnName, columnValue, allTableColumns, ForeignKeysTable, originalTable, allPrimaryKeys, allForeignKeys }) {
+function ForeignKeysBis({table, columnName, columnValue, allTableColumns, originalTable, allPrimaryKeys, allForeignKeys }) {
 
-    // console.log(table,"columnName", columnName)
-    // console.log(table,"columnValue", columnValue)
-
+    // Utilisation des params pour récupérer la base de données
     const { bdd } = useParams();
 
+    // Initialisation des états
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({column: null, order: null});
@@ -26,21 +25,16 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
     const [count, setCount] = useState(0);
     const [primaryKey, setPrimaryKey] = useState(null);
 
-
+    // Hook pour naviguer
     const navigate = useNavigate();
 
     let limit = 10;
     let totalPages = count === 0 ? 1 : Math.ceil(count / 10);
 
-    // Extrait le nom de la colonne adapté à partir de ForeignKeysTable
-    // const foreignKeyTriplet = ForeignKeysTable.find(([foreignColumnName, tableName, originalColumnName]) =>
-    //         tableName === originalTable && originalColumnName === columnName );
-    // const adaptedColumnName = foreignKeyTriplet ? foreignKeyTriplet[0] : undefined;
-    // const adaptedColumnName = table === originalTable ? columnName :
-    //     foreignKeyTriplet ? foreignKeyTriplet[0] : undefined;
-
+    // Création d'un nouvel objet pour stocker les tables et les colonnes liées
     const newForeignTables = {};
-    // Parcourir les clés étrangères
+
+    // Parcourir les clés étrangères pour remplir newForeignTables
     for (let [key, value] of Object.entries(allForeignKeys)) {
         for (let innerArray of value) {
             if (innerArray[1] === originalTable && innerArray[2] === columnName) {
@@ -48,26 +42,21 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
             }
         }
     }
-    // Parcourir les clés primaires
+    // Parcourir les clés primaires pour remplir newForeignTables
     for (let [key, value] of Object.entries(allPrimaryKeys)) {
         if (value === columnName) {
             newForeignTables[key] = value;
         }
     }
-    // On ajoute la table initiale dans tous les cas
+    // Ajoute la table initiale à newForeignTables
     newForeignTables[originalTable] = columnName;
 
+    // Déterminer la colonne adaptée pour la table courante
     const adaptedColumnName = newForeignTables[table];
 
-    // console.log(table, columnName, adaptedColumnName)
-    
-
-
-
-    // Récupère les données de la table sélectionnée
+    // Récupère les données de la table en utilisant l'API
     useEffect(() => {
         if (table) {
-
             const filterString = encodeURIComponent(JSON.stringify(filters));
             let url = `http://localhost:8000/api/${bdd}/${table}?page=${page}&limit=${limit}&filter=${filterString}`;
 
@@ -76,7 +65,7 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
                 url += `&sort=${sortString}`;
             }
 
-            // Utilisation du nom de colonne adapté
+            // Si on a une colonne adaptée et une valeur, les ajouter à l'URL
             if (adaptedColumnName && columnValue) {
                 url += `&columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
             }
@@ -85,36 +74,32 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
                     setDataTable(response.data);
                 })
                 .catch(error => {
-                    console.error('Error fetching data', error);
+                    console.error('Erreur lors de la récupération des données', error);
                 });
         } else {
             setDataTable([]);
         }
     }, [table, page, limit, filters, sort, columnName, columnValue]);
 
-
-
-    //Récupère les noms des colonnes de la table sélectionnée
+    // Récupère les noms des colonnes de la table
     useEffect(() => {
-        table ?
+        if (table) {
             axios.get(`http://localhost:8000/api/${bdd}/${table}/colonnes`)
                 .then(response => {
                     setTableColumns(response.data);
                 })
                 .catch(error => {
-                    console.error('Error fetching column names', error);
-                })
-            : setTableColumns([]);
+                    console.error('Erreur lors de la récupération des noms des colonnes', error);
+                });
+        } else {
+            setTableColumns([]);
+        }
     }, [table]);
 
-    //Récupère le nombre de lignes de la table sélectionnée
+    // Récupère le nombre total de lignes de la table
     useEffect(() => {
         if (table) {
-            // console.log(table, "adaptedColumnName", adaptedColumnName)
-            // console.log(table, encodeURIComponent(adaptedColumnName))
             const filterString = encodeURIComponent(JSON.stringify(filters));
-            // const url = `http://localhost:8000/api/${bdd}/${table}/count?filter=${filterString}
-            // &columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
             let url = `http://localhost:8000/api/${bdd}/${table}/count?filter=${filterString}`;
             if (adaptedColumnName && columnValue) {
                 url += `&columnName=${encodeURIComponent(adaptedColumnName)}&columnValue=${encodeURIComponent(columnValue)}`;
@@ -124,44 +109,43 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
                     setCount(response.data.count);
                 })
                 .catch(error => {
-                    console.error('Error fetching count', error);
+                    console.error('Erreur lors de la récupération du nombre de lignes', error);
                 });
         } else {
             setCount(0);
         }
     }, [table, filters, columnValue]);
 
-
-
-    //Récupère le nom de la clé primaire de la table sélectionnée
+    // Récupère le nom de la clé primaire de la table
     useEffect(() => {
-        table &&
-        axios.get(`http://localhost:8000/api/${bdd}/${table}/primarykey`)
-            .then(response => {
-                setPrimaryKey(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching primary key', error);
-            });
+        if (table) {
+            axios.get(`http://localhost:8000/api/${bdd}/${table}/primarykey`)
+                .then(response => {
+                    setPrimaryKey(response.data);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération de la clé primaire', error);
+                });
+        }
     }, [table]);
 
-
-
+    // Gérer le changement de la page entrée par l'utilisateur
     function handleInputChange(event) {
         let inputValue = Number(event.target.value);
-        // empêcher l'utilisateur de mettre 0
+        // Empêche l'utilisateur de saisir 0
         if (inputValue >= 1) {
-            setPage(Number(event.target.value));
-            }
-    // empêcher l'utilisateur de mettre un nombre supérieur au nombre de pages
+            setPage(inputValue);
+        }
+        // Empêche l'utilisateur de saisir un nombre supérieur au nombre total de pages
         if (inputValue > totalPages) {
             setPage(totalPages);
         }
     }
 
+    // Fonctions pour naviguer entre les pages
     function nextPage() {
         if ( page < totalPages ) {
-        setPage(page + 1);
+            setPage(page + 1);
         }
     }
     function previousPage() {
@@ -176,8 +160,7 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
         setPage(totalPages);
     }
 
-    // Gestion du tri des colonnes
-    // Gestion du tri des colonnes
+    // Gérer le tri des colonnes
     const handleSort = (columnName) => {
         let newSort = { column: columnName, order: 'ASC' };
         if (sort.column === columnName) {
@@ -190,67 +173,83 @@ function ForeignKeysBis({table, columnName, columnValue, allTableColumns, Foreig
                     break;
                 default:
                     break;
+            }
         }
-    }
         setSort(newSort);
-}
+    }
 
 
-
+    // Rendu JSX du composant
     return (
+        // Conteneur principal pour les clés étrangères de la table
         <div className="block-table-foreign-keys">
             <div className="header">
+                {/* Affiche les boutons de navigation uniquement si la table est sélectionnée et il y a plus d'une page */}
                 {table && totalPages !== 1 ?
-                  <div className="navigation">
-                    <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheFinGauche} alt="flecheFinGauche" onClick={() => putDataAtBegin()} />
-                    <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheGauche} alt="flecheGauche" onClick={() => previousPage()} />
-                    <input className="input-page" type="number" value={page} min={1} onChange={handleInputChange} />
-                    <img className={`fleche-droite ${page === totalPages ? 'disabled' : ''}`} src={flecheDroite} alt="flecheDroite" onClick={() => nextPage()} />
-                    <img className={`fleche-droite ${page === totalPages ? 'disabled' : ''}`} src={flecheFinDroite} alt="flecheFinDroite" onClick={() => putDataAtEnd()} />
-                  </div>
+                    <div className="navigation">
+                        {/* Bouton pour aller à la première page */}
+                        <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheFinGauche} alt="flecheFinGauche" onClick={() => putDataAtBegin()} />
+                        {/* Bouton pour aller à la page précédente */}
+                        <img className={`fleche-gauche ${page === 1 ? 'disabled' : ''}`}  src={flecheGauche} alt="flecheGauche" onClick={() => previousPage()} />
+                        {/* Input pour indiquer et modifier la page actuelle */}
+                        <input className="input-page" type="number" value={page} min={1} onChange={handleInputChange} />
+                        {/* Bouton pour aller à la page suivante */}
+                        <img className={`fleche-droite ${page === totalPages ? 'disabled' : ''}`} src={flecheDroite} alt="flecheDroite" onClick={() => nextPage()} />
+                        {/* Bouton pour aller à la dernière page */}
+                        <img className={`fleche-droite ${page === totalPages ? 'disabled' : ''}`} src={flecheFinDroite} alt="flecheFinDroite" onClick={() => putDataAtEnd()} />
+                    </div>
                 : null}
+                {/* Affiche le nom de la table sélectionnée */}
                 <h2 className="table-title"> Table : {table}</h2>
             </div>
-                <table>
-                  <thead>
+            {/* Tableau d'affichage des données */}
+            <table>
+                <thead>
                     <tr>
-                      {(allTableColumns[table] || []).map((columnName, index) => (
-                        <th key={index} onClick={() => {handleSort(columnName); setPage(1)}}>
-                          <div className="column-content">
-                            <div className="titleColumn">
-                              {columnName}
-                              {
-                                sort.column === columnName
-                                  ? sort.order === 'ASC'
-                                    ? <img className="triangle-bas" src={triangleBas} alt="triangleBas" />
-                                    : <img className="triangle-bas" src={triangleHaut} alt="triangleHaut" />
-                                  : null
-                              }
-                            </div>
-                            <input
-                              onClick={(e) => e.stopPropagation()}
-                              placeholder="Filtre"
-                              value={filters[columnName] || ''}
-                              onChange={e => { setFilters({...filters, [columnName]: e.target.value}); setPage(1);}}
-                            />
-                          </div>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dataTable.map((row, index) => (
-                      <tr key={index} className="case-table">
-                        {row.map((cell, cellIndex) => (
-                            <td key={cellIndex} onClick={() => {navigate(`/${bdd}/row/${table}/${allPrimaryKeys[table]}/${row[0]}`)}}>{cell}</td>
+                        {/* En-tête de la table: boucle sur les colonnes de la table */}
+                        {(allTableColumns[table] || []).map((columnName, index) => (
+                            <th key={index} onClick={() => {handleSort(columnName); setPage(1)}}>
+                                <div className="column-content">
+                                    <div className="titleColumn">
+                                        {/* Nom de la colonne */}
+                                        {columnName}
+                                        {/* Indicateur de tri: affiche une icône différente selon l'ordre de tri */}
+                                        {
+                                            sort.column === columnName
+                                            ? sort.order === 'ASC'
+                                                ? <img className="triangle-bas" src={triangleBas} alt="triangleBas" />
+                                                : <img className="triangle-bas" src={triangleHaut} alt="triangleHaut" />
+                                            : null
+                                        }
+                                    </div>
+                                    {/* Champ pour filtrer les données selon cette colonne */}
+                                    <input
+                                        onClick={(e) => e.stopPropagation()} // Empêche le clic sur l'input de déclencher l'événement onClick du parent
+                                        placeholder="Filtre"
+                                        value={filters[columnName] || ''}
+                                        onChange={e => { setFilters({...filters, [columnName]: e.target.value}); setPage(1);}}
+                                    />
+                                </div>
+                            </th>
                         ))}
-
-                      </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    {/* Corps de la table: boucle sur chaque ligne de données */}
+                    {dataTable.map((row, index) => (
+                        <tr key={index} className="case-table">
+                            {/* Pour chaque cellule de la ligne */}
+                            {row.map((cell, cellIndex) => (
+                                // Lors d'un clic sur une cellule, navigue vers le détail de la ligne
+                                <td key={cellIndex} onClick={() => {navigate(`/${bdd}/row/${table}/${allPrimaryKeys[table]}/${row[0]}`)}}>{cell}</td>
+                            ))}
+                        </tr>
                     ))}
-                  </tbody>
-                </table>
+                </tbody>
+            </table>
         </div>
     );
     }
+
 
 export default ForeignKeysBis;
